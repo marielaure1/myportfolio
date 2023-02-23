@@ -5,10 +5,11 @@ export interface IWork{
 
     seo: { title: string, description: string }
 
-    slug: string,
+    slug: string
 
-    coverImage: string,
+    coverImage: string
 
-    description: string,
+    description: string
 
+    published: boolean
 }

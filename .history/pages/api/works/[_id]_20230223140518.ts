@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
 
             dbConnect()
-            console.log(_id);
+            console.log(id);
             
 
             const works = await WorkModel.findOne({_id: _id})

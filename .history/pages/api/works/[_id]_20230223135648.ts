@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
 
             dbConnect()
-            console.log(_id);
+            console.log(id);
             
 
             const works = await WorkModel.findOne({_id: _id})
@@ -69,7 +69,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             // Connexion à la base de donnée
             dbConnect()
 
-            const foundWork = await WorkModel.findOne({_id: _id})
+            const foundWork = await WorkModel.findOne({_id: id})
 
             if(!foundWork){
                 throw new Error('foundWork')
@@ -84,7 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
 
 
-            const updateWork = await WorkModel.updateOne({_id: _id}, { $set : { title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage}})
+            const updateWork = await WorkModel.updateOne({_id: id}, { $set : { title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage}})
 
             if(!updateWork){
                 throw new Error('Update Work')
@@ -128,15 +128,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             dbConnect()
 
-            const foundWork = await WorkModel.findOne({_id: _id})
+            const foundWork = await WorkModel.findOne({_id: id})
 
             if(!foundWork){
-                console.log(_id);
+                console.log(id);
                 
                 throw new Error('foundWork')
             }
 
-            const worksDelete = await WorkModel.deleteOne({_id: _id})
+            const worksDelete = await WorkModel.deleteOne({_id: id})
 
             if(!worksDelete){
                 throw new Error('worksDelete')

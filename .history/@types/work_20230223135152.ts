@@ -11,4 +11,5 @@ export interface IWork{
 
     description: string,
 
+    published: boolean
 }
