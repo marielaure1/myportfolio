@@ -63,14 +63,14 @@ export default function Works({ work }: Props){
                         {works.map((work) => (
                             <div className="card-projet border-b-4 border-black relative">
                                 <Link href={`/admin/works/${work._id}`}>
-                                    <img src={work.coverImage} alt="" className="object-cover object-center w-full h-full"/>
+                                    <img src={"/img/works/" + work.coverImage} alt="" className="object-cover object-center w-full h-full"/>
                                     <div className="absolute bottom-0 left-0 w-full p-5 text-white bg-black/50">
                                         <h2 className="uppercase font-semibold text-lg mb-2.5">{work.title}</h2>
                                         <p className="text-sm">{work.description}</p>
                                     </div>
                                 </Link>
                                 <div>
-                                <Link href={`/admin/works/update/${work._id}`}>Modifier</Link>
+                                    <Link href={`/admin/works/update/${work._id}`}>Modifier</Link>
                                     <button onClick={() => deleteWork(work._id)}>Supprimer</button>
                                 </div>
                             </div>

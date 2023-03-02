@@ -8,7 +8,7 @@ const NavComponent: FC = () =>  {
         <>
             <nav className="w-full h-[100px] py-[20px] px-[5vw] flex justify-between fixed ">
                 <div className="w-[70px]">
-                    <Image src="./img/logo.svg" alt="Marie-Laure Edjour Développeuse web " width={300} height={300} className="w-full"/>
+                    <Image src="/img/logo.svg" alt="Marie-Laure Edjour Développeuse web " width={300} height={300} className="w-full"/>
                 </div>
 
                 <div className="menu">
@@ -28,7 +28,7 @@ const NavComponent: FC = () =>  {
                                 <Link href="/contact">Contact</Link>
                             </li>
                             <li className="menu-item">
-                                <Link href="/auth/signin">Panel</Link>
+                                <Link href="/auth/signin">Admin</Link>
                             </li>
                         </ul>
                     </div>
