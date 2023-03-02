@@ -1,14 +1,14 @@
 export interface IWork{
-    _id: string,
+    _id: string;
 
-    title: string,
+    title: string;
 
-    seo: { title: string, description: string }
+    seo: { title: string; description: string }
 
-    slug: string,
+    slug: string;
 
-    coverImage: string,
+    coverImage: string;
 
-    description: string,
+    description: string;
 
 }

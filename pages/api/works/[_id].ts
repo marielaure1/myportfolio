@@ -20,7 +20,7 @@ type Data = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { title, seo, slug, description, coverImage } = req.body
     
-
+                
     const{
         query: { _id },
         method,

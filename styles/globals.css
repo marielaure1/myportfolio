@@ -4,3 +4,19 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.card-projet:nth-child(3n+1){
+    grid-row: span 3;
+}
+
+.card-projet:nth-child(3n+2){
+    grid-row: span 2;
+}
+
+.card-projet:nth-child(3n+3){
+    grid-row: span 3;
+}
+
+.card-projet:nth-child(3n+1){
+    grid-row: span 3;
+}
