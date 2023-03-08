@@ -11,7 +11,7 @@ const LayoutComponent: FC<Props> = ({ children }) => {
     return (
         <>
             <NavComponent />
-            <main className="px-[5vw] py-[10vw]">{children}</main>
+            <main>{children}</main>
             <FooterComponent />
         </>
     )

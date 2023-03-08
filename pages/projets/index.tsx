@@ -1,4 +1,4 @@
-import "@/assets/js/main.js"
+// import "@/assets/js/main.js"
 
 import { GetServerSideProps } from 'next'
 import { IWork } from '@/@types/work'
@@ -30,18 +30,6 @@ export default function Projets({ work }: Props){
         })
     }, [])
 
-    const deleteWork = async(id: string) => {
-            fetch(`/api/works/${id}`)
-            .then(response => response.json())
-            .then((json) => {
-                
-                setWorks(json.works)
-                setIsLoading(false)
-            })
-
-        
-    }
-
     // if(!isLoading){
     //     return <> <h2>Chargement</h2></>
     // }
@@ -50,7 +38,7 @@ export default function Projets({ work }: Props){
     if(works){
         return (
             <>
-                <header className="w-full px-[5vw] pt-[50px] flex">
+                <header className="w-full px-[5vw] pt-[15vw] flex justify-between items-end mb-[2vw]">
                     <h1 className="pb-[5vw] text-7xl font-semibold uppercase">Mes projets</h1>
                 </header>
 

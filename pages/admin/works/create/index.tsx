@@ -1,85 +1,84 @@
-import { GetServerSideProps } from 'next'
-import { IWork } from '@/@types/work'
-import { NextPage } from "next"
-import useSWR, {Fetcher} from 'swr'
-import Link from "next/link"
 import { useEffect, useState } from 'react'
+import Link from "next/link"
 
-
-
-type Props = {
-    work: IWork[];
-}
-
-export default function Works({ work }: Props){
+export default function CreateWork(){
     const [ message, setMessage ] = useState("");
-    const [ works, setWorks ] = useState<IWork[] | null>(null);
+    const [workCreate, setWorkCreate] = useState({ 
+        title: "",
+        seo: { title: "", description: "" },
+        slug: "",
+        coverImage: "",
+        description: "",
+    });
+    
     const [ isLoading, setIsLoading ] = useState(false);
     
-
-
-    
-    useEffect(() => {
-        fetch(`/api/works`)
-        .then(response => response.json())
-        .then((json) => {
-            
-            setWorks(json.works)
-            setIsLoading(false)
+    const postWork = () => {
+        setIsLoading(true);
+        fetch(`/api/works`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(workCreate),
         })
-    }, [])
-
-    const deleteWork = async(id: string) => {
-            fetch(`/api/works/${id}`)
-            .then(response => response.json())
+            .then((response) => response.json())
             .then((json) => {
-                
-                setWorks(json.works)
-                setMessage(`Le travail avec l'ID ${id} a été supprimé.`)  
-                setIsLoading(false)
-            })
+                setMessage(json.message);
+                setIsLoading(false);
+            });
+    };
 
-        
-    }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { id, value } = e.target;
+        setWorkCreate((prev) => ({
+          ...prev,
+          title: id === 'title' ? value : prev.title,
+          description: id === 'description' ? value : prev.description,
+          slug: id === 'slug' ? value : prev.slug,
+          coverImage: id === 'coverImage' ? value : prev.coverImage,
+          seo: {
+            ...prev.seo,
+            title: id === 'seo.title' ? value : prev.seo.title,
+            description: id === 'seo.description' ? value : prev.seo.description,
+          },
+        }));
+      };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        postWork();
+    };
+    
 
     // if(!isLoading){
     //     return <> <h2>Chargement</h2></>
     // }
 
     
-    if(works){
+
         return (
             <>
-                <header className="w-full px-[5vw] pt-[50px] flex">
-                    <h1 className="pb-[5vw] text-7xl font-semibold uppercase">Mes travaux</h1>
+                <header className="w-full px-[5vw] pt-[15vw] flex justify-between items-end mb-[5vw]">
+                    <h1 className="text-7xl font-semibold uppercase w-fit max-w-[80%]">Création d'un projet</h1>
+                    <Link href="/admin/works" className="btn-admin"><ion-icon name="list-outline"></ion-icon></Link>
                 </header>
 
-                <Link href="/admin/works/create">Créer</Link>
-
-                {message && <p>{message}</p>}
+                {message && <p id="message">{JSON.stringify(message)}</p>}
 
                 <section className="w-full px-[5vw] pb-[5vw]">
-                    <div className="w-full box-border grid grid-cols-3 auto-rows-[13vw] gap-[20px]">
-                        {works.map((work) => (
-                            <div className="card-projet border-b-4 border-black relative">
-                                <Link href={`/admin/works/${work._id}`}>
-                                    <img src="./img/1.jpg" alt="" className="object-cover object-center w-full h-full"/>
-                                    <div className="absolute bottom-0 left-0 w-full p-5 text-white bg-black/50">
-                                        <h2 className="uppercase font-semibold text-lg mb-2.5">{work.title}</h2>
-                                        <p className="text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum, tempora?</p>
-                                    </div>
-                                </Link>
-                                <div>
-                                <Link href={`/admin/works/update/${work._id}`}>Modifier</Link>
-                                    <button onClick={() => deleteWork(work._id)}>Supprimer</button>
-                                </div>
-                            </div>
-                         ))}
-                    </div>
+
+                    <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
+                        <input type="text" id="title" name="title" placeholder="Titre du projet" value={workCreate.title} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
+                        <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workCreate.seo.title} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
+                        <textarea id="seo.description" placeholder="Description seo du projet" value={workCreate.seo.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"></textarea>
+
+                        <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workCreate.slug} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
+                        <input type="text" id="coverImage" name="coverImage" placeholder="Image du projet" value={workCreate.coverImage} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
+                        <textarea name="description" id="description" placeholder="Description du projet" value={workCreate.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"></textarea>
+
+                        <button type="submit" className=" mb-[20px] w-fit h-fit py-[10px] px-[20px] bg-black text-white">Envoyer</button>
+                    </form>
+                    
                 </section>
-    
-                <Link href="/admin/works/create">Créer</Link>
             </>
         )
-    }
 }

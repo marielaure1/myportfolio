@@ -5,8 +5,6 @@ import useSWR, {Fetcher} from 'swr'
 import Link from "next/link"
 import { useEffect, useState } from 'react'
 
-
-
 type Props = {
     work: IWork[];
 }
@@ -15,9 +13,6 @@ export default function Works({ work }: Props){
     const [ message, setMessage ] = useState("");
     const [ works, setWorks ] = useState<IWork[] | null>(null);
     const [ isLoading, setIsLoading ] = useState(false);
-    
-
-
     
     useEffect(() => {
         fetch(`/api/works`)
