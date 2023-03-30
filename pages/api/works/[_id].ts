@@ -4,6 +4,8 @@ import { dbConnect } from '@/utils/mongodb/db-connect'
 import  WorkModel from '@/utils/mongodb/model'
 
 import { IWork } from '@/@types/work'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { getServerSession } from 'next-auth/next'
 
 
 
@@ -18,12 +20,12 @@ type Data = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const session = await getServerSession(req, res, authOptions)
     const { title, seo, slug, description, coverImage } = req.body
     
                 
     const{
         query: { _id },
-        method,
     } = req
 
     if (req.method === 'GET') {
@@ -43,11 +45,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             return res.status(200).json({ works, message: 'OK' })
 
-        } catch (error) {
+        } catch (error: any) {
 
             console.log(error)
-            var message = `Une erreur c'est produite, veuillez réessayer!`
-            var code = 500
+            let message = `Une erreur c'est produite, veuillez réessayer!`
+            let code = 500
 
             if(error.message == "Error Work"){
                 message = `Ce projet n'existe pas !`
@@ -63,6 +65,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === 'PUT') {
+        if(!session) return res.status(401)
 
         try{
 
@@ -93,10 +96,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(201).json({ message: `Le projet ${foundWork.title} a bien été modifié`})
 
 
-        } catch(error){
+        } catch(error: any){
             console.log(error)
-            var message = `Une erreur c'est produite, veuillez réessayer!`
-            var code = 500
+            let message = `Une erreur c'est produite, veuillez réessayer!`
+            let code = 500
 
             if(error.message == "foundWork"){
                 message = `Ce projet n'existe pas !`
@@ -123,6 +126,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === 'DELETE') {
+        if(!session) return res.status(401)
 
         try {
 
@@ -146,11 +150,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             return res.status(200).json({ work: foundWork, works: works, message: `Le projet ${foundWork.title} a bien été supprimé` })
 
-        } catch (error) {
+        } catch (error: any) {
 
             console.log(error)
-            var message = `Une erreur c'est produite, veuillez réessayer!`
-            var code = 500
+            let message = `Une erreur c'est produite, veuillez réessayer!`
+            let code = 500
 
             if(error.message == "foundWork"){
                 message = `Ce projet n'existe pas !`

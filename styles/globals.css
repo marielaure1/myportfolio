@@ -1,43 +1,60 @@
-@import "@/styles/css/reset.css";
-
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
 
+@import "@/styles/reset.css";
+@import "@/assets/js/myAnimation/css/style.css";
 
-@import "@/styles/css/style.css";
+
+/* GENERALES */
+
+body{
+    @apply font-montserrat;
+}
 
 :root{
-    --cl: black;
+    --cl: #171717;
 }
 
+@layer base {
+    html {
+      font-family: Montserrat, sans-serif;
+    }
+  }
+
+h1, h2, h3, h4, h5{
+    @apply leading-tight;
+}
+
+a{
+    @apply cursor-pointer;
+}
+
+/* Curseur */
+.cursor.cursor-difference .cursor-part{
+    @apply bg-red-600;
+}
+
+.cursor.cursor-round .cursor-base{
+    @apply w-5 h-5;
+}
+
+/* Banner title */
+.banner{
+    @apply w-full px-[5vw] md:pt-[15vw] pt-[15vh] flex justify-between items-end mb-[5vw];
+}
+
+.banner h1{
+    @apply md:text-7xl text-4xl font-semibold uppercase w-fit max-w-[80%] text-black;
+}
+
+/* Card projet */
 .card-projet{
-    background-color: #171717;
+    background-color: theme("colors.cl-black");
 }
 
-.btn-admin{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 1px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 20px;
-    transition: 0.5s;
- }
-
- .btn-admin ion-icon{
-    font-size: 18px;
-    color: black;
-    transition: 0.5s;
-}
-
-.btn-admin:hover, .btn-admin:hover ion-icon{
-    transform: scale(1.2);
-}
 .card-projet:nth-child(3n+1){
     grid-row: span 3;
 }
@@ -53,83 +70,175 @@
 .card-projet:nth-child(3n+1){
     grid-row: span 3;
 }
-
-#menu{
-    opacity: 0;
-    z-index: -1;
-}
-
-#menu.active{
-    opacity: 1;
-    z-index: 10;
-}
-
 .card-projet-admin{
-   overflow: hidden;
-}
-
-.card-projet-admin img{
-   transition: 0.5s;
-}
-
-.card-projet-admin > div{
-   height: 100%;
-   width: 100%;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   position: absolute;
-   top: 0;
-   left: 0;
-}
-
-.card-projet-admin > div{
-    display: none; 
-}
-
-.card-projet-admin .btn-admin{
-    border: 1px solid white;
+    @apply overflow-hidden;
  }
-
- .card-projet-admin .btn-admin ion-icon{
-    color: white;
-}
-
-.card-projet-admin:hover img{
+ 
+ .card-projet-admin img{
+    @apply duration-500;
+ }
+ 
+ .card-projet-admin > div{
+    @apply h-full w-full items-center justify-center absolute inset-x-0 hidden;
+ }
+ 
+ .card-projet-admin .btn-admin{
+    @apply border border-solid border-white;
+  }
+ 
+  .card-projet-admin .btn-admin ion-icon{
+    @apply text-white;
+ }
+ 
+ .card-projet-admin:hover img{
     filter:  brightness(40%);
     transform: scale(1.1);
+ }
+ 
+ .card-projet-admin:hover > div{
+    @apply flex;
+ }
+
+ /* Formulaires */
+
+input, textarea{
+    @apply outline-[#0000009d]
 }
 
-.card-projet-admin:hover > div{
-    display: flex;
+ #description{
+    @apply block resize-none overflow-hidden h-auto;
 }
+
+#message{
+    @apply block text-white p-[20px] fixed right-0 bottom-0;
+    background-color: theme(colors.cl-black);
+}
+
+.champs{
+    @apply bg-transparent border-b-2 border-black mb-[20px] py-[10px] px-[20px];
+}
+
+.form-btn{
+    @apply mb-[20px] w-fit h-fit py-[10px] px-[20px] bg-black text-white;
+}
+
+.btn-admin{
+    @apply ml-[20px] w-[50px] h-[50px] rounded-full border border-solid border-black flex items-center justify-center duration-500;
+    /* border-radius: 50%; */
+ }
+
+ .btn-admin ion-icon{
+    @apply text-lg text-black duration-500;
+}
+
+.btn-admin:hover, .btn-admin:hover ion-icon{
+    transform: scale(1.2);
+}
+
+.btn-upload{
+    @apply my-[20px] bg-purple-800 text-white py-[10px] px-[20px];
+}
+
+/* MENU */
 
 #menu{
-    padding: 5vw;
+    @apply p-[5vw]
 }
 
 #menu .menu-item{
     margin-bottom: 0px;
+    @apply mb-0;
 }
 
 #menu .menu-item a{
-    font-size: 13vh;
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    font-weight: 600;
+    @apply text-[13vh] tracking-[10px] uppercase font-semibold text-white;
     text-stroke: 2px red;
     -webkit-text-stroke: 1px var(--cl);
-    color: white;
     font-family: Helvetica, sans-serif;
 }
 
-#menu .menu-item.active a, #menu .menu-item:hover a{
+#menu.active{
+    @apply z-10 opacity-100;
+}
+
+#menu .menu-item a.active, #menu .menu-item:hover a{
     color: var(--cl);
 }
 
-#description{
-    display: block;
-    resize: none;
-    overflow: hidden;
-    height: auto;
+.menu-btn.active .cross{
+    @apply block;
+}
+
+.menu-btn.active .hamburger{
+    @apply hidden;
+}
+
+/* HOME */
+/* header */
+.title-section-home, .title-section-home-reverse{
+    @apply pr-[10px] h-full w-full border-solid border-black sm:flex justify-center items-center box-border hidden;
+}
+
+.title-section-home{
+    @apply border-r;
+}
+
+.title-section-home-reverse{
+    @apply border-l;
+}
+
+.title-section-home h3, .title-section-home-reverse h3{
+    @apply text-[6vw] font-bold uppercase font-sans;
+    writing-mode: vertical-lr;
+    -webkit-text-stroke: 1.5px #000000;
+    animation: fillstroke infinite 1s ;
+}
+.title-section-home h3{
+    transform: rotate(180deg);
+}
+
+.title-section-home-mobile, .title-section-home-mobile-reverse{
+    @apply text-[10vw] font-bold uppercase font-sans mb-10 sm:hidden block;
+    -webkit-text-stroke: 1.5px #000000;
+    animation: fillstroke infinite 1s ;
+}
+
+.title-section-home-mobile-reverse{
+    @apply text-[10vw] font-bold uppercase font-sans mb-10 text-end;
+}
+
+
+.scroll span{
+    animation: scroll 1.6s  infinite;
+}
+
+/* KEYFRAMES */
+@keyframes scroll{
+    0%{
+        top: 0;
+    }
+    10%{
+        top: 0;
+    }
+    50%{
+        top: 60%;
+    }
+    100%{
+        top: 0;
+    }
+}
+
+@keyframes fillstroke{
+    0%{
+         color: #ffffff;
+    }
+    49%{
+        color: #ffffff;
+    }
+    50%{
+        color: #000;
+   }
+    100%{
+        color: #000;
+     }
 }

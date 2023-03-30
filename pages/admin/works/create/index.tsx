@@ -1,30 +1,46 @@
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import Link from "next/link"
+import {  CldUploadWidget  } from 'next-cloudinary';
+import { IWork, Image } from '@/@types/work'
+// import {IonIcon} from "react-ion-icon";
 
-export default function CreateWork(){
+type Props = {
+    work: IWork[];
+    image: Image[];
+}
+const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
+
+export default function CreateWork({ image }: Props){
     const [ message, setMessage ] = useState("");
     const [workCreate, setWorkCreate] = useState({ 
         title: "",
         seo: { title: "", description: "" },
         slug: "",
-        coverImage: "",
+        coverImage: [] as Image[],
         description: "",
     });
-    
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [listImage, setListImage] = useState<Image[]>([]);
     
     const postWork = () => {
-        setIsLoading(true);
+        console.log(workCreate);
+        console.log(JSON.stringify({
+                    ...workCreate,
+                    coverImage: listImage
+                }));
+        setWorkCreate((prev) => ({
+            ...prev,
+            coverImage: [{"id":"nbefnudnuarxaqytml6i", "url":"http://res.cloudinary.com/dqtcgbmik/image/upload/v1679071584/nbefnudnuarxaqytml6i.svg", "width": 2000, "height": 2000}],
+        }));
+        
         fetch(`/api/works`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(workCreate),
         })
-            .then((response) => response.json())
-            .then((json) => {
-                setMessage(json.message);
-                setIsLoading(false);
-            });
+        .then((response) => response.json())
+        .then((json) => {
+            setMessage(json.message);
+        });
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -34,7 +50,6 @@ export default function CreateWork(){
           title: id === 'title' ? value : prev.title,
           description: id === 'description' ? value : prev.description,
           slug: id === 'slug' ? value : prev.slug,
-          coverImage: id === 'coverImage' ? value : prev.coverImage,
           seo: {
             ...prev.seo,
             title: id === 'seo.title' ? value : prev.seo.title,
@@ -47,36 +62,75 @@ export default function CreateWork(){
         e.preventDefault();
         postWork();
     };
-    
 
-    // if(!isLoading){
-    //     return <> <h2>Chargement</h2></>
-    // }
+    const onCloudinaryUpload = (e: any) => {
+        console.log(e);
 
-    
+        const newImage = {
+            id: e.info.public_id,
+            url: e.info.url,
+            width: e.info.width,
+            height: e.info.height
+          };
+
+
+          setListImage((prevListImage) => {
+            return prevListImage ? [...prevListImage, newImage] : [newImage];
+          });
+
+          setWorkCreate((prev) => ({
+            ...prev,
+            coverImage: [...prev.coverImage, newImage],
+        }));
+        console.log(listImage);
+        
+    }
 
         return (
             <>
-                <header className="w-full px-[5vw] pt-[15vw] flex justify-between items-end mb-[5vw]">
-                    <h1 className="text-7xl font-semibold uppercase w-fit max-w-[80%]">Création d'un projet</h1>
+                <header className="banner">
+                    <h1 >Création d'un projet</h1>
                     <Link href="/admin/works" className="btn-admin"><ion-icon name="list-outline"></ion-icon></Link>
                 </header>
 
-                {message && <p id="message">{JSON.stringify(message)}</p>}
+                {message && <p id="message">{message}</p>}
 
-                <section className="w-full px-[5vw] pb-[5vw]">
+                <section className="w-full px-[5vw] pb-[5vw] grid grid-cols-2 gap-[50px]">
 
                     <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
-                        <input type="text" id="title" name="title" placeholder="Titre du projet" value={workCreate.title} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
-                        <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workCreate.seo.title} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
-                        <textarea id="seo.description" placeholder="Description seo du projet" value={workCreate.seo.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"></textarea>
+                        <input type="text" id="title" name="title" placeholder="Titre du projet" value={workCreate.title} onChange={handleChange}  className="champs"/>
 
-                        <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workCreate.slug} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
-                        <input type="text" id="coverImage" name="coverImage" placeholder="Image du projet" value={workCreate.coverImage} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"/>
-                        <textarea name="description" id="description" placeholder="Description du projet" value={workCreate.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"></textarea>
+                        <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workCreate.slug} onChange={handleChange}  className="champs"/>
 
-                        <button type="submit" className=" mb-[20px] w-fit h-fit py-[10px] px-[20px] bg-black text-white">Envoyer</button>
+                      
+
+                    
+                        <textarea name="description" id="description" placeholder="Description du projet" value={workCreate.description} onChange={handleChange} className="champs"></textarea>
+
+                        <CldUploadWidget uploadPreset={NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} onUpload={onCloudinaryUpload}>
+                            {({ open }) => {
+                                function handleOnClick(e: any) {
+                                e.preventDefault();
+                                open();
+                                }
+                                return (
+                                <button onClick={handleOnClick} className="btn-upload">
+                                    Uploader une Image
+                                </button>
+                                );
+                            }}
+                        </CldUploadWidget>
+
+                        <h2 className='my-[20px]'>SEO</h2>
+                        <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workCreate.seo.title} onChange={handleChange}  className="champs"/>
+                        <textarea id="seo.description" placeholder="Description seo du projet" value={workCreate.seo.description} onChange={handleChange} className="champs"></textarea>
+
+                        <button type="submit" className="form-btn">Envoyer</button>
                     </form>
+
+                    {/* <div className="image-projet flex flex-col aspect-square">
+                        <img src={ workCreate.coverImage } alt="" className="w-full  bg-black"/>
+                    </div> */}
                     
                 </section>
             </>

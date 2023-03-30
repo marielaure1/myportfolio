@@ -9,7 +9,22 @@ module.exports = {
         extend: {
             colors: {
                 'cl-dark': "#353535",
-                'redd': "#FF0000"
+                'redd': "#FF0000",
+                'cl-black': "#171717",
+            },
+            backgroundImage: {
+                'hero-contact': "url('/img/contact.png')",
+            }, 
+            fontFamily: {
+                'montserrat': ['Montserrat', "sans-serif"],
+                'times': ['Times New Roman', 'Times', "serif"],
+            },
+            gridTemplateColumns: {
+                'home-grid': '12% 88%',
+                'home-grid-reverse': '88% 12%'
+            },
+            gridTemplateRows: {
+                '10': 'repeat(10, minmax(0, 1fr))'
             }
         },
         screens: {

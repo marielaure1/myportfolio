@@ -1,3 +1,10 @@
+export interface Image {
+    id: string;
+    url: string;
+    width: number;
+    height: number;
+}
+
 export interface IWork{
     _id: string;
 
@@ -7,8 +14,9 @@ export interface IWork{
 
     slug: string;
 
-    coverImage: string;
+    coverImage: Image[];
 
     description: string;
 
 }
+

@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { dbConnect } from '@/utils/mongodb/db-connect'
 import  WorkModel from '@/utils/mongodb/model'
 import { IWork } from '@/@types/work.js'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { getServerSession } from 'next-auth/next'
 
 type Data = {
     works?: IWork[]
@@ -11,13 +13,17 @@ type Data = {
 
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const session = await getServerSession(req, res, authOptions)
 
     const { title, seo, slug, description, coverImage } = req.body
+
+    console.log(req.body);
+    
 
 
     if (req.method === 'POST') {
 
-        
+        if(!session) return res.status(401)
 
         try{
 
@@ -41,10 +47,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(201).json({ message: `Le projet ${workCreate.title} a bien été créé`})
 
 
-        } catch(error){
+        } catch(error: any){
             console.log(error)
-            var message = `Une erreur c'est produite, veuillez réessayer!`
-            var code = 500
+            let message = `Une erreur c'est produite, veuillez réessayer!`
+            let code = 500
 
             if(error.message == "Error Champs"){
                 message = `Vous devez remplir tous les champs !`
@@ -77,11 +83,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             return res.status(200).json({ works, message: 'OK' })
 
-        } catch (error) {
+        } catch (error: any) {
 
             console.log(error)
-            var message = `Une erreur c'est produite, veuillez réessayer!`
-            var code = 500
+            let message = `Une erreur c'est produite, veuillez réessayer!`
+            let code = 500
 
             if(error.message == "Error All Works"){
                 message = `Aucun projet n'a été trouvé !`

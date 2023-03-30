@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from "next/link"
-import { redirect } from 'next/navigation';
+// import {IonIcon} from "react-ion-icon";
 
 export default function CreateWork(){
     const router = useRouter()
@@ -15,8 +15,8 @@ export default function CreateWork(){
         coverImage: "",
         description: "",
     });
+
     
-    const [ isLoading, setIsLoading ] = useState(false);
 
     const getWork = () => {
         fetch(`/api/works/${_id}`, { method: "GET"})
@@ -24,7 +24,6 @@ export default function CreateWork(){
         .then((json) => {
             
             setWorkEdit(json.works)
-            setIsLoading(false)
         })
         .catch((error) => {
             console.log(error);  
@@ -47,7 +46,6 @@ export default function CreateWork(){
         .then((json) => {
             setWorkEdit(json.works)
             setMessage(json.message);
-            setIsLoading(false);
 
             if(_id){
                 getWork()
@@ -80,12 +78,6 @@ export default function CreateWork(){
         
     };
     
-
-    // if(!isLoading){
-    //     return <> <h2>Chargement</h2></>
-    // }
-
-    
     if(workEdit){
         return (
             <>
@@ -105,7 +97,7 @@ export default function CreateWork(){
                     <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
                         <input type="text" id="title" name="title" placeholder="Titre du projet" value={workEdit.title} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]" />
                         <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workEdit.seo.title} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"  />
-                        <textarea id="seo.description" placeholder="Description seo du projet" value={workEdit.seo.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] h-fit py-[10px] px-[20px]" maxlength="160"></textarea>
+                        <textarea id="seo.description" placeholder="Description seo du projet" value={workEdit.seo.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] h-fit py-[10px] px-[20px]" maxLength={160}></textarea>
 
                         <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workEdit.slug} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"  />
                         <input type="text" id="coverImage" name="coverImage" placeholder="Image du projet" value={workEdit.coverImage} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]" />

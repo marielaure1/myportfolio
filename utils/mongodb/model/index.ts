@@ -1,6 +1,7 @@
 import { models, model, Schema } from 'mongoose'
+import { IWork, Image } from '@/@types/work'
 
-const WorkSchema: Schema = new Schema({
+const WorkSchema: Schema = new Schema<IWork>({
 
     title: {
 
@@ -32,7 +33,7 @@ const WorkSchema: Schema = new Schema({
 
     coverImage: {
 
-        type: String,
+        type: [{}],
 
         required: true,
 
@@ -40,6 +41,6 @@ const WorkSchema: Schema = new Schema({
 
 })
 
-const WorkModel = models.Work || model('Work', WorkSchema)
+const WorkModel = models.Work || model<IWork>('Work', WorkSchema)
 
 export default WorkModel

@@ -6,7 +6,8 @@ import Link from "next/link"
 import { useEffect, useState } from 'react'
 // import "@/public/js/myAnimation/myAnimation.js"
 import Script from "next/script"
-
+// import {IonIcon} from "react-ion-icon";
+import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
     work: IWork[];
@@ -16,6 +17,7 @@ export default function Works({ work }: Props){
     const [ message, setMessage ] = useState("");
     const [ works, setWorks ] = useState<IWork[] | null>(null);
     const [ isLoading, setIsLoading ] = useState(false);
+    const { data: session } = useSession()
     
     useEffect(() => {
         fetch(`/api/works`)
@@ -47,9 +49,10 @@ export default function Works({ work }: Props){
     if(works){
         return (
             <>
-                <header className="w-full px-[5vw] pt-[15vw] flex justify-between items-end mb-[5vw] ">
-                    <h1 className="text-7xl font-semibold uppercase hoverable-difference  animation animation-bounce-letter w-fit">Mes travaux</h1>
-                    <Link href="/admin/works/create"  className="btn-admin"><ion-icon name="add-outline"></ion-icon></Link>
+                <header className="banner">
+                <h2>Bienvenue {session?.user?.name}</h2>
+                    <h1 className="hoverable-difference animation animation-bounce-letter">Mes travaux</h1>
+                    <Link href="/admin/works/create"  className="btn-admin"><ion-icon name="add-outline"/></Link>
                 </header>
 
                 
@@ -62,7 +65,7 @@ export default function Works({ work }: Props){
                         {works.map((work) => (
                             <div key={work._id} className="card-projet border-b-4 border-solid border-black relative card-projet-admin" >
                                 <Link href={`/admin/works/${work._id}`}>
-                                    <img src={"/img/works/" + work.coverImage} alt="" className="object-cover object-center w-full h-full"/>
+                                    {/* <img src={work.coverImage} alt="" className="object-cover object-center w-full h-full"/> */}
                                     <div className="absolute bottom-0 left-0 w-full p-5 text-white bg-black/50 z-[5]">
                                         <h2 className="uppercase font-semibold text-lg mb-2.5">{work.title}</h2>
                                         <p className="text-sm">{work.description}</p>
@@ -81,3 +84,11 @@ export default function Works({ work }: Props){
         )
     }
 }
+
+// export const getServerSideProps: GetServerSideProps<Props> = async () => {
+//     const res = await fetch(`http://localhost:3000/api/works`);
+//     const { works } = await res.json();
+  
+//     return { props: { works } };
+//   };
+  
