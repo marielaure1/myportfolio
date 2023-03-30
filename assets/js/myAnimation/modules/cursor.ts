@@ -13,9 +13,8 @@ interface Options {
     textRoundContent: string;
 }
 
-type PropsType = {
-    options: Options[]
-  }
+
+type PropsType = Partial<Options>
 
 export default class Cursor {
     
@@ -39,7 +38,7 @@ export default class Cursor {
     distance
     textRoundContent
 
-    constructor(options: Options) {
+    constructor(options: PropsType) {
         this.el = options.el || ".cursor"
         this.mode = options.mode || "difference"
         this.speed = options.speed || false

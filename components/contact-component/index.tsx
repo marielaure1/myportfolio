@@ -19,7 +19,7 @@ const ContactForm: FC = () => {
         message: ""
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault()
         
         fetch(`/api/mail`, {
