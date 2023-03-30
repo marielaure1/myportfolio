@@ -2,11 +2,23 @@ import Image from "next/image"
 import Link from 'next/link'
 import { FC, useEffect } from 'react';
 import { Icon } from '@iconify/react';
-// import $ from "jquery"
-// import { BounceLetter, Cursor} from "@/assets/js/myAnimation/myAnimation";
+import $ from "jquery"
+import { BounceLetter, Cursor} from "@/assets/js/myAnimation/myAnimation";
 
 
 const FooterComponent: FC = () => {
+
+
+        useEffect(() => {
+  
+const cursor = new Cursor({
+    mode: "round",
+    distance: -15
+})
+
+
+        
+}, [])
     
     return (
         <>
