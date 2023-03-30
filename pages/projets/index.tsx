@@ -20,10 +20,12 @@ export default function Projets({ work }: Props){
             
             setWorks(json.works)
             setIsLoading(false)
+
+             console.log(json)
         })
     }, [])
     
-    if(works){
+    // if(works){
         return (
             <>
             
@@ -33,7 +35,7 @@ export default function Projets({ work }: Props){
 
                 <section className="w-full md:px-[5vw] px-0 pb-[5vw]">
                     <div className="w-full box-border grid md:grid-cols-3 grid-cols-2 auto-rows-[13vw] md:gap-[20px] gap-[10px]">
-                        {works.map((work) => (
+                        {works?.map((work) => (
                             <div key={work._id} className="card-projet border-b-4 border-black relative hoverable-text" data-text={ work.title } >
                                 <Link href={`/projet/${work._id}`}>
                                     <img src={work.coverImage} alt="Développeur web freelance, création de site web" className="object-cover object-center w-full h-full"/>
@@ -49,7 +51,7 @@ export default function Projets({ work }: Props){
     
             </>
         )
-    }
+    // }
 }
 
 
