@@ -10,7 +10,7 @@ const FooterComponent: FC = () => {
     
     return (
         <>
-            <footer className="flex w-full">
+            <footer className="flex w-full border-t border-solid border-black">
                <div className="sm:grid grid-cols-3 px-[5vw] w-full">
                     <div className="links py-7 flex sm:flex-row flex-col sm:mb-0 mb-4 border-r border-dashed border-black">
                         <div className="sm:w-1/2">
