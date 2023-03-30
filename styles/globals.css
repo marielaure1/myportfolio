@@ -67,9 +67,6 @@ a{
     grid-row: span 3;
 }
 
-.card-projet:nth-child(3n+1){
-    grid-row: span 3;
-}
 .card-projet-admin{
     @apply overflow-hidden;
  }
@@ -152,7 +149,6 @@ input, textarea{
 
 #menu .menu-item a{
     @apply text-[13vh] tracking-[10px] uppercase font-semibold text-white;
-    text-stroke: 2px red;
     -webkit-text-stroke: 1px var(--cl);
     font-family: Helvetica, sans-serif;
 }

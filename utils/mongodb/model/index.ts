@@ -1,5 +1,5 @@
 import { models, model, Schema } from 'mongoose'
-import { IWork, Image } from '@/@types/work'
+import { IWork } from '@/@types/work'
 
 const WorkSchema: Schema = new Schema<IWork>({
 
@@ -33,7 +33,7 @@ const WorkSchema: Schema = new Schema<IWork>({
 
     coverImage: {
 
-        type: [{}],
+        type: String,
 
         required: true,
 
