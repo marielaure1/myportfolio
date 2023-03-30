@@ -49,13 +49,13 @@ const NavComponent: FC = () =>  {
                             <button onClick={() => signOut()}>Se déconnecter</button>
                         </>
                     )}
-                    {/* {!session?.user && (
+                    {!session?.user && (
                         <>
                             <li className="menu-item">
                                 <Link href="/api/auth/signin/credentails">Se connecter</Link>
                             </li>
                         </>
-                    )} */}
+                    )}
                     
                 </ul>
             </div>

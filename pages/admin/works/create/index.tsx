@@ -16,21 +16,21 @@ export default function CreateWork({ image }: Props){
         title: "",
         seo: { title: "", description: "" },
         slug: "",
-        coverImage: [] as Image[],
+        coverImage:"",
         description: "",
     });
-    const [listImage, setListImage] = useState<Image[]>([]);
+    const [listImage, setListImage] = useState("");
     
     const postWork = () => {
         console.log(workCreate);
-        console.log(JSON.stringify({
-                    ...workCreate,
-                    coverImage: listImage
-                }));
-        setWorkCreate((prev) => ({
-            ...prev,
-            coverImage: [{"id":"nbefnudnuarxaqytml6i", "url":"http://res.cloudinary.com/dqtcgbmik/image/upload/v1679071584/nbefnudnuarxaqytml6i.svg", "width": 2000, "height": 2000}],
-        }));
+        // console.log(JSON.stringify({
+        //             ...workCreate,
+        //             coverImage: listImage
+        //         }));
+        // setWorkCreate((prev) => ({
+        //     ...prev,
+        //     coverImage: 
+        // }));
         
         fetch(`/api/works`, {
             method: "POST",
@@ -66,23 +66,10 @@ export default function CreateWork({ image }: Props){
     const onCloudinaryUpload = (e: any) => {
         console.log(e);
 
-        const newImage = {
-            id: e.info.public_id,
-            url: e.info.url,
-            width: e.info.width,
-            height: e.info.height
-          };
-
-
-          setListImage((prevListImage) => {
-            return prevListImage ? [...prevListImage, newImage] : [newImage];
-          });
-
           setWorkCreate((prev) => ({
             ...prev,
-            coverImage: [...prev.coverImage, newImage],
+            coverImage: e.info.url,
         }));
-        console.log(listImage);
         
     }
 
