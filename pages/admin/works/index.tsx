@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import Script from "next/script"
 // import {IonIcon} from "react-ion-icon";
 import { signOut, useSession } from 'next-auth/react'
+import {IonIcon} from "react-ion-icon";
 
 type Props = {
     work: IWork[];
@@ -52,7 +53,7 @@ export default function Works({ work }: Props){
                 <header className="banner">
                 <h2>Bienvenue {session?.user?.name}</h2>
                     <h1 className="hoverable-difference animation animation-bounce-letter">Mes travaux</h1>
-                    <Link href="/admin/works/create"  className="btn-admin"><ion-icon name="add-outline"/></Link>
+                    <Link href="/admin/works/create"  className="btn-admin"><IonIcon name="add-outline"/></Link>
                 </header>
 
                 
@@ -72,8 +73,8 @@ export default function Works({ work }: Props){
                                     </div>
                                 </Link>
                                 <div>
-                                    <Link href={`/admin/works/update/${work._id}`} className="btn-admin"><ion-icon name="pencil"></ion-icon></Link>
-                                    <button onClick={() => deleteWork(work._id)} className="btn-admin"><ion-icon name="trash-bin"></ion-icon></button>
+                                    <Link href={`/admin/works/update/${work._id}`} className="btn-admin"><IonIcon name="pencil"></IonIcon></Link>
+                                    <button onClick={() => deleteWork(work._id)} className="btn-admin"><IonIcon name="trash-bin"></IonIcon></button>
                                 </div>
                             </div>
                          ))}
@@ -86,7 +87,7 @@ export default function Works({ work }: Props){
 }
 
 // export const getServerSideProps: GetServerSideProps<Props> = async () => {
-//     const res = await fetch(`http://localhost:3000/api/works`);
+//     const res = await fetch(`/api/works`);
 //     const { works } = await res.json();
   
 //     return { props: { works } };

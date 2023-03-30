@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from "next/link"
-// import {IonIcon} from "react-ion-icon";
+import {IonIcon} from "react-ion-icon";
 
 export default function CreateWork(){
     const router = useRouter()
@@ -84,8 +84,8 @@ export default function CreateWork(){
                 <header className="w-full px-[5vw] pt-[15vw] flex justify-between items-end mb-[5vw] ">
                     <h1 className="text-7xl font-semibold uppercase w-fit">Modification d'un projet</h1>
                     <span className='flex '>
-                    <Link href="/admin/works"  className="btn-admin"><ion-icon name="list-outline"></ion-icon></Link>
-                    <Link href="/admin/works/create"  className="btn-admin"><ion-icon name="add-outline"></ion-icon></Link>
+                    <Link href="/admin/works"  className="btn-admin"><IonIcon  name="list-outline"></IonIcon></Link>
+                    <Link href="/admin/works/create"  className="btn-admin"><IonIcon name="add-outline"></IonIcon></Link>
                     
                     </span>
                 </header>

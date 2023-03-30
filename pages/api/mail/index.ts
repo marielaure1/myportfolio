@@ -17,11 +17,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             // Vérification que tous les champs sont remplie
             if (!name || !phone || !email || !sujet || !message){
 
-                const nameError = !nameError ? "Veuillez saisir votre nom complet" : ""
-                const phoneError = !phoneError ? "Veuillez saisir votre numéro de téléphone" : ""
-                const emailError = !emailError ? "Veuillez saisir votre email" : ""
-                const sujetError = !sujetError ? "Veuillez saisir le sujet de votre message" : ""
-                const messageError = !messageError ? "Veuillez saisir votre message" : ""
+                const nameError = !name ? "Veuillez saisir votre nom complet" : ""
+                const phoneError = !phone ? "Veuillez saisir votre numéro de téléphone" : ""
+                const emailError = !email ? "Veuillez saisir votre email" : ""
+                const sujetError = !sujet ? "Veuillez saisir le sujet de votre message" : ""
+                const messageError = !message ? "Veuillez saisir votre message" : ""
 
                 const error = {name: nameError, phone: phoneError, email: emailError, sujet: sujetError, message: messageError}
 

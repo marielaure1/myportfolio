@@ -2,7 +2,7 @@ import {  useState } from 'react'
 import Link from "next/link"
 import {  CldUploadWidget  } from 'next-cloudinary';
 import { IWork, Image } from '@/@types/work'
-// import {IonIcon} from "react-ion-icon";
+import {IonIcon} from "react-ion-icon";
 
 type Props = {
     work: IWork[];
@@ -77,7 +77,7 @@ export default function CreateWork({ image }: Props){
             <>
                 <header className="banner">
                     <h1 >Création d'un projet</h1>
-                    <Link href="/admin/works" className="btn-admin"><ion-icon name="list-outline"></ion-icon></Link>
+                    <Link href="/admin/works" className="btn-admin"><IonIcon name="list-outline"></IonIcon></Link>
                 </header>
 
                 {message && <p id="message">{message}</p>}
