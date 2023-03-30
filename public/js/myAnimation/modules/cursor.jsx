@@ -35,8 +35,8 @@ export default class Cursor {
             let div = document.createElement("div");
             div.classList.add("cursor");
 
-            div.innerHTML = `<div class="cursor-part cursor-base"></div>
-                                <div class="cursor-part cursor-second"></div>`;
+            div.innerHTML = `<div className="cursor-part cursor-base"></div>
+                                <div className="cursor-part cursor-second"></div>`;
 
             
 
@@ -79,7 +79,7 @@ export default class Cursor {
                         this.cursor.classList.add(`cursor-${element}`)
 
                         if($(e).attr("data-text")){
-                            this.cursorBase.innerHTML = `<div class="text">
+                            this.cursorBase.innerHTML = `<div className="text">
                                                             <p>${$(e).attr("data-text")}</p>
                                                          </div>`;
                         } 
@@ -112,17 +112,17 @@ export default class Cursor {
         this.cursorSecond = document.querySelector(".cursor-second");
 
         if (this.text && this.mode != "text") {
-        this.cursorBase.innerHTML = `<div class="text">
+        this.cursorBase.innerHTML = `<div className="text">
                                                 <p>${this.text}</p>
                                             </div>`;
         }
 
         if (this.mode == "text") {
-                this.cursor.innerHTML = `<div class="cursor-part cursor-base"></div>`;
+                this.cursor.innerHTML = `<div className="cursor-part cursor-base"></div>`;
         }
 
         if (this.mode == "text-round") {
-        this.cursorSecond.innerHTML = ` <div class="text-round-content">${this.textRoundContent}</div>`;
+        this.cursorSecond.innerHTML = ` <div className="text-round-content">${this.textRoundContent}</div>`;
         }
 
         if(this.mode != "normal"){
