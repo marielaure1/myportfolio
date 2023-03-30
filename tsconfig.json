@@ -20,5 +20,12 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "middleware.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true,
+    "useTranspileModule": true,
+    "doTypeCheck": true,
+    "forkChecker": true
+}
+
 }
