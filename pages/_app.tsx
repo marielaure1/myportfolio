@@ -34,7 +34,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
         </LayoutComponent>
         </SessionProvider>
 
-        {/* <script src="../js/main.js" type="module" ></script> */}
+        <script src="../js/main.js" type="module" ></script>
         
     </>
      

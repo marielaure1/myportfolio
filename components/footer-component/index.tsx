@@ -2,30 +2,12 @@ import Image from "next/image"
 import Link from 'next/link'
 import { FC, useEffect } from 'react';
 import { Icon } from '@iconify/react';
-import $ from "jquery"
+// import $ from "jquery"
 // import { BounceLetter, Cursor} from "@/assets/js/myAnimation/myAnimation";
 
 
 const FooterComponent: FC = () => {
-    useEffect(() => {
-        
-        document.querySelectorAll("[data-toggle]").forEach(element => {
-            element.addEventListener("click", () => {
-                element.classList.toggle("active")
-                document.querySelector(element.getAttribute("data-target")).classList.toggle("active")
-            })
-        });
-
-        document.querySelectorAll(".menu-item a").forEach(element => {
-            element.addEventListener("click", () => {
-                document.querySelector("#menu-toggle").classList.remove("active")
-                document.querySelector("#menu").classList.remove("active")
-            })
-        })
-
-
-        
-    }, [])
+    
     return (
         <>
             <footer className="flex w-full">

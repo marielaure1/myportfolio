@@ -14,7 +14,7 @@ export interface IWork{
 
     slug: string;
 
-    coverImage: Image[];
+    coverImage: string;
 
     description: string;
 
