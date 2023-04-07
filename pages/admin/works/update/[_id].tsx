@@ -1,20 +1,64 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from "next/link"
-import {IonIcon} from "react-ion-icon";
+import { Icon } from '@iconify/react';
+import {  CldUploadWidget, CldImage  } from 'next-cloudinary';
+import { IWork, Image } from '@/@types/work'
 
-export default function CreateWork(){
+
+type Props = {
+    work: IWork[];
+    image: Image[];
+}
+
+type WorkEdit = {
+    title: string;
+    slug: string;
+    description: string;
+    coverImage: {
+        id: string;
+        url: string;
+        width: number;
+        height: number;
+    };
+    galerieImage: Image[];
+    seo: {
+      title: string;
+      description: string;
+    };
+    published: Boolean;
+  }
+
+const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
+
+export default function UpdateWork(){
     const router = useRouter()
     const { _id } = router.query 
 
     const [ message, setMessage ] = useState("");
-    const [workEdit, setWorkEdit] = useState({ 
+    const [ workEdit, setWorkEdit] = useState<WorkEdit>({ 
         title: "",
         seo: { title: "", description: "" },
         slug: "",
-        coverImage: "",
+        coverImage: { id: "", url: "", width: 0, height: 0 },
+        galerieImage: [],
         description: "",
-    });
+        published: true
+    })
+    useEffect(() => {
+        if (!['true', 'false'].includes(String(workEdit.published))) {
+          setWorkEdit(prev => ({
+            ...prev,
+            published: true
+          }));
+        }
+      }, [workEdit.published]);
+
+    useEffect(() => {
+        if(_id){
+            getWork()
+        }
+    }, [_id])
 
     
 
@@ -29,14 +73,15 @@ export default function CreateWork(){
             console.log(error);  
         })
     } 
-
-    useEffect(() => {
-        if(_id){
-            getWork()
-        }
-    }, [_id])
     
     const updateWork = async () => {
+
+        setWorkEdit((prev) => ({
+            ...prev,
+            coverImage: workEdit.coverImage,
+            galerieImage: workEdit.galerieImage
+        }));
+
         fetch(`/api/works/${_id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -57,18 +102,18 @@ export default function CreateWork(){
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { id, value } = e.target;
+        const { id, value, name } = e.target;
         setWorkEdit((prev) => ({
           ...prev,
           title: id === 'title' ? value : prev.title,
           description: id === 'description' ? value : prev.description,
           slug: id === 'slug' ? value : prev.slug,
-          coverImage: id === 'coverImage' ? value : prev.coverImage,
           seo: {
             ...prev.seo,
             title: id === 'seo.title' ? value : prev.seo.title,
             description: id === 'seo.description' ? value : prev.seo.description,
           },
+          published: name === 'published' ? value === 'true' : prev.published
         }));
       };
 
@@ -77,36 +122,126 @@ export default function CreateWork(){
         updateWork();
         
     };
+
+    const onCloudinaryUpload = (e: any) => {
+
+        const newImage = {
+            id: e.info.public_id,
+            url: e.info.url,
+            width: e.info.width,
+            height: e.info.height
+        }
+
+        setWorkEdit((prev: any) => ({
+            ...prev,
+            galerieImage: [...prev.galerieImage, newImage],
+        }));
+    }
+
+    const onCloudinaryUploadCover = (e: any) => {
+
+        setWorkEdit((prev: any) => ({
+            ...prev,
+            coverImage: {
+                id: e.info.public_id,
+                url: e.info.url,
+                width: e.info.width,
+                height: e.info.height
+            },
+        }));
+    }
     
     if(workEdit){
         return (
             <>
-                <header className="w-full px-[5vw] pt-[15vw] flex justify-between items-end mb-[5vw] ">
-                    <h1 className="text-7xl font-semibold uppercase w-fit">Modification d'un projet</h1>
+                <header className="banner">
+                    <h1>Modification d'un projet</h1>
                     <span className='flex '>
-                    <Link href="/admin/works"  className="btn-admin"><IonIcon  name="list-outline"></IonIcon></Link>
-                    <Link href="/admin/works/create"  className="btn-admin"><IonIcon name="add-outline"></IonIcon></Link>
+                    <Link href="/admin/works"  className="btn-admin"><Icon icon="material-symbols:format-list-bulleted-rounded" /></Link>
+                    
+                    <Link href="/admin/works/create"  className="btn-admin"><Icon icon="material-symbols:add" /></Link>
                     
                     </span>
                 </header>
 
                 {message && <p id="message">{message}</p>}
 
-                <section className="w-full px-[5vw] pb-[5vw]">
+                <section className="w-full px-[5vw] pb-[5vw] grid grid-cols-2 gap-[50px]">
 
                     <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
-                        <input type="text" id="title" name="title" placeholder="Titre du projet" value={workEdit.title} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]" />
-                        <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workEdit.seo.title} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"  />
-                        <textarea id="seo.description" placeholder="Description seo du projet" value={workEdit.seo.description} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] h-fit py-[10px] px-[20px]" maxLength={160}></textarea>
 
-                        <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workEdit.slug} onChange={handleChange} className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]"  />
-                        <input type="text" id="coverImage" name="coverImage" placeholder="Image du projet" value={workEdit.coverImage} onChange={handleChange}  className="border-b-2 border-black mb-[20px] w-[50%] py-[10px] px-[20px]" />
-                        <textarea name="description" id="description" placeholder="Description du projet" value={workEdit.description} onChange={handleChange} className="border-b-2 border-black mb-[50px] w-[50%] py-[10px] px-[20px]" ></textarea>
+                        <input type="text" id="title" name="title" placeholder="Titre du projet" value={workEdit.title} onChange={handleChange} className="champs" />
+
+                        <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workEdit.seo.title} onChange={handleChange} className="champs"  />
+
+                        <textarea id="seo.description" placeholder="Description seo du projet" value={workEdit.seo.description} onChange={handleChange} className="champs" maxLength={160}></textarea>
+
+                        <CldUploadWidget uploadPreset={NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} onUpload={onCloudinaryUploadCover}>
+                        {({ open }) => {
+                            function handleOnClick(e: any) {
+                            e.preventDefault();
+                            open();
+                            }
+                            return (
+                            <button onClick={handleOnClick} className="btn-upload">
+                                Uploader une image de couverture
+                            </button>
+                            );
+                        }}
+                    </CldUploadWidget>
+
+                    <CldUploadWidget uploadPreset={NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} onUpload={onCloudinaryUpload}>
+                        {({ open }) => {
+                            function handleOnClick(e: any) {
+                            e.preventDefault();
+                            open();
+                            }
+                            return (
+                            <button onClick={handleOnClick} className="btn-upload">
+                                Uploader des images pour la galerie
+                            </button>
+                            );
+                        }}
+                    </CldUploadWidget>
+
+                        <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workEdit.slug} onChange={handleChange} className="champs"  />
+                       
+                        <textarea name="description" id="description" placeholder="Description du projet" value={workEdit.description} onChange={handleChange} className="champs" ></textarea>
+
+                        <label>
+                        Publié :
+                        <input
+                            type="radio"
+                            name="published"
+                            value="true"
+                            checked={workEdit.published === true}
+                            onChange={handleChange}
+                        /> Oui
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="published"
+                            value="false"
+                            checked={workEdit.published === false}
+                            onChange={handleChange}
+                        /> Non
+                    </label>
 
                         <button type="submit" className=" mb-[20px] w-fit h-fit py-[10px] px-[20px] bg-black text-white" >Envoyer</button>
                     </form>
+
+                    <div className="image-projet flex flex-col aspect-square">
+                    { workEdit?.coverImage?.id && <CldImage width={ workEdit.coverImage.width } height={ workEdit.coverImage.height } src={ workEdit.coverImage.id } alt="Description of my image"  className="w-full  bg-black"/> }
+                </div>
                     
                 </section>
+
+                <section className="grid grid-cols-4 gap-3 px-[5vw] pb-[5vw]">
+                {workEdit?.galerieImage?.map((image) => (
+                    <CldImage key={ image.id } width={ image.width } height={ image.height } src={ image.id } alt="Description of my image" />
+                ))}
+            </section>
             </>
         )
     }

@@ -8,13 +8,37 @@ import {Cursor} from "@/assets/js/myAnimation/myAnimation";
 
 const FooterComponent: FC = () => {
 
+    // const Textarea = (e) => {
+    //     this.style.height = "auto";
+    //     this.style.height = this.scrollHeight + "px";
+    //   }
+
 
         useEffect(() => {
+
+            document.querySelectorAll("[data-toggle]").forEach(element => {
+                element.addEventListener("click", () => {
+                    element.classList.toggle("active")
+                    const attribute = element.getAttribute("data-target") as string
+                    const target = document.querySelector(attribute) as HTMLElement
+                    target.classList.toggle("active")
+                })
+            });
+            
+            document.querySelectorAll(".menu-item a").forEach(element => {
+                element.addEventListener("click", () => {
+                    const toggleMenu = document.getElementById("menu-toggle") as HTMLElement
+                    const menu = document.getElementById("menu") as HTMLElement
+                    menu.classList.remove("active")
+                    toggleMenu.classList.toggle("active")
+                })
+            })
   
-            const cursor = new Cursor({
+            new Cursor({
                 mode: "round",
                 distance: -15,
             })
+
         }, [])
     
     return (

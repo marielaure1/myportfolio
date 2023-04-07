@@ -1,37 +1,63 @@
-import {  useState } from 'react'
+import {  useState, useEffect } from 'react'
 import Link from "next/link"
-import {  CldUploadWidget  } from 'next-cloudinary';
+import {  CldUploadWidget, CldImage  } from 'next-cloudinary';
 import { IWork, Image } from '@/@types/work'
-import {IonIcon} from "react-ion-icon";
+import { Icon } from '@iconify/react';
 
 type Props = {
     work: IWork[];
     image: Image[];
 }
+
+type WorkCreate = {
+    title: string;
+    slug: string;
+    description: string;
+    coverImage: {
+        id: string;
+        url: string;
+        width: number;
+        height: number;
+    };
+    galerieImage: Image[];
+    seo: {
+      title: string;
+      description: string;
+    };
+    published: Boolean;
+  }
+
 const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
 
 export default function CreateWork({ image }: Props){
-    const [ message, setMessage ] = useState("");
-    const [workCreate, setWorkCreate] = useState({ 
+    const [ message, setMessage ] = useState("")
+    const [workCreate, setWorkCreate] = useState<WorkCreate>({ 
         title: "",
         seo: { title: "", description: "" },
         slug: "",
-        coverImage:"",
+        coverImage: { id: "", url: "", width: 0, height: 0 },
+        galerieImage: [],
         description: "",
-    });
-    const [listImage, setListImage] = useState("");
+        published: true
+    })
+
+    useEffect(() => {
+        if (!['true', 'false'].includes(String(workCreate.published))) {
+          setWorkCreate(prev => ({
+            ...prev,
+            published: true
+          }));
+        }
+      }, [workCreate.published]);
     
     const postWork = () => {
-        console.log(workCreate);
-        // console.log(JSON.stringify({
-        //             ...workCreate,
-        //             coverImage: listImage
-        //         }));
-        // setWorkCreate((prev) => ({
-        //     ...prev,
-        //     coverImage: 
-        // }));
-        
+
+        setWorkCreate((prev) => ({
+            ...prev,
+            coverImage: workCreate.coverImage,
+            galerieImage: workCreate.galerieImage
+        }));
+
         fetch(`/api/works`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -44,7 +70,7 @@ export default function CreateWork({ image }: Props){
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { id, value } = e.target;
+        const { id, value, name } = e.target;
         setWorkCreate((prev) => ({
           ...prev,
           title: id === 'title' ? value : prev.title,
@@ -55,6 +81,7 @@ export default function CreateWork({ image }: Props){
             title: id === 'seo.title' ? value : prev.seo.title,
             description: id === 'seo.description' ? value : prev.seo.description,
           },
+          published: name === 'published' ? value === 'true' : prev.published
         }));
       };
 
@@ -64,62 +91,118 @@ export default function CreateWork({ image }: Props){
     };
 
     const onCloudinaryUpload = (e: any) => {
-        console.log(e);
 
-          setWorkCreate((prev) => ({
+        const newImage = {
+            id: e.info.public_id,
+            url: e.info.url,
+            width: e.info.width,
+            height: e.info.height
+        }
+
+        setWorkCreate((prev: any) => ({
             ...prev,
-            coverImage: e.info.url,
+            galerieImage: [...prev.galerieImage, newImage],
         }));
-        
     }
 
-        return (
-            <>
-                <header className="banner">
-                    <h1 >Création d'un projet</h1>
-                    <Link href="/admin/works" className="btn-admin"><IonIcon name="list-outline"></IonIcon></Link>
-                </header>
+    const onCloudinaryUploadCover = (e: any) => {
 
-                {message && <p id="message">{message}</p>}
+        setWorkCreate((prev: any) => ({
+            ...prev,
+            coverImage: {
+                id: e.info.public_id,
+                url: e.info.url,
+                width: e.info.width,
+                height: e.info.height
+            },
+        }));
+    }
 
-                <section className="w-full px-[5vw] pb-[5vw] grid grid-cols-2 gap-[50px]">
+    return (
+        <>
+            <header className="banner">
+                <h1 >Création d'un projet</h1>
+                <Link href="/admin/works" className="btn-admin">
+                <Icon icon="material-symbols:add" />
+                    </Link>
+            </header>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
-                        <input type="text" id="title" name="title" placeholder="Titre du projet" value={workCreate.title} onChange={handleChange}  className="champs"/>
+            {message && <p id="message">{message}</p>}
 
-                        <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workCreate.slug} onChange={handleChange}  className="champs"/>
+            <section className="w-full px-[5vw] pb-[5vw] grid grid-cols-2 gap-[50px]">
 
-                      
+                <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
+                    <input type="text" id="title" name="title" placeholder="Titre du projet" value={workCreate.title} onChange={handleChange}  className="champs"/>
 
-                    
-                        <textarea name="description" id="description" placeholder="Description du projet" value={workCreate.description} onChange={handleChange} className="champs"></textarea>
+                    <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workCreate.slug} onChange={handleChange}  className="champs"/>
+                
+                    <textarea name="description" id="description" placeholder="Description du projet" value={workCreate.description} onChange={handleChange} className="champs"></textarea>
 
-                        <CldUploadWidget uploadPreset={NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} onUpload={onCloudinaryUpload}>
-                            {({ open }) => {
-                                function handleOnClick(e: any) {
-                                e.preventDefault();
-                                open();
-                                }
-                                return (
-                                <button onClick={handleOnClick} className="btn-upload">
-                                    Uploader une Image
-                                </button>
-                                );
-                            }}
-                        </CldUploadWidget>
+                    <CldUploadWidget uploadPreset={NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} onUpload={onCloudinaryUploadCover}>
+                        {({ open }) => {
+                            function handleOnClick(e: any) {
+                            e.preventDefault();
+                            open();
+                            }
+                            return (
+                            <button onClick={handleOnClick} className="btn-upload">
+                                Uploader une image de couverture
+                            </button>
+                            );
+                        }}
+                    </CldUploadWidget>
 
-                        <h2 className='my-[20px]'>SEO</h2>
-                        <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workCreate.seo.title} onChange={handleChange}  className="champs"/>
-                        <textarea id="seo.description" placeholder="Description seo du projet" value={workCreate.seo.description} onChange={handleChange} className="champs"></textarea>
+                    <CldUploadWidget uploadPreset={NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET} onUpload={onCloudinaryUpload}>
+                        {({ open }) => {
+                            function handleOnClick(e: any) {
+                            e.preventDefault();
+                            open();
+                            }
+                            return (
+                            <button onClick={handleOnClick} className="btn-upload">
+                                Uploader des images pour la galerie
+                            </button>
+                            );
+                        }}
+                    </CldUploadWidget>
 
-                        <button type="submit" className="form-btn">Envoyer</button>
-                    </form>
+                    <h2 className='my-[20px]'>SEO</h2>
+                    <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workCreate.seo.title} onChange={handleChange}  className="champs"/>
+                    <textarea id="seo.description" placeholder="Description seo du projet" value={workCreate.seo.description} onChange={handleChange} className="champs"></textarea>
 
-                    {/* <div className="image-projet flex flex-col aspect-square">
-                        <img src={ workCreate.coverImage } alt="" className="w-full  bg-black"/>
-                    </div> */}
-                    
-                </section>
-            </>
-        )
+                    <label>
+                        Publié :
+                        <input
+                            type="radio"
+                            name="published"
+                            value="true"
+                            checked={workCreate.published === true}
+                            onChange={handleChange}
+                        /> Oui
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="published"
+                            value="false"
+                            checked={workCreate.published === false}
+                            onChange={handleChange}
+                        /> Non
+                    </label>
+
+                    <button type="submit" className="form-btn">Envoyer</button>
+                </form>
+
+                <div className="image-projet flex flex-col aspect-square">
+                    { workCreate?.coverImage?.id && <CldImage width={ workCreate.coverImage.width } height={ workCreate.coverImage.height } src={ workCreate.coverImage.id } alt="Description of my image"  className="w-full  bg-black"/> }
+                </div>
+                
+            </section>
+            <section className="grid grid-cols-4 gap-3 px-[5vw] pb-[5vw]">
+                {workCreate?.galerieImage?.map((image) => (
+                    <CldImage key={ image.id } width={ image.width } height={ image.height } src={ image.id } alt="Description of my image" />
+                ))}
+            </section>
+        </>
+    )
 }

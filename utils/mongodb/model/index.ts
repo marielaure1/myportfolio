@@ -1,46 +1,80 @@
-import { models, model, Schema } from 'mongoose'
-import { IWork } from '@/@types/work'
+
+
+import { models, model, Schema } from 'mongoose';
+import { IWork, Image } from '@/@types/work';
+
+const ImageSchema: Schema = new Schema<Image>({
+  id: { 
+    type: String, 
+    required: true 
+  },
+  url: { 
+    type: String, 
+    required: true 
+  },
+  width: { 
+    type: Number, 
+    required: true 
+  },
+  height: { 
+    type: Number, 
+    required: true 
+  },
+});
 
 const WorkSchema: Schema = new Schema<IWork>({
-
-    title: {
-
-        type: String,
-
-        required: true,
-
-        unique: true,
-
+  title: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  seo: {
+    title: { 
+      type: String, 
+      required: true 
     },
-
-    seo: {
-
-        title: { type: String, required: true },
-
-        description: { type: String, required: true },
-
+    description: { 
+      type: String, 
+      required: true 
     },
-
-    slug: { type: String, required: true, unique: true },
-
-    description: {
-
-        type: String,
-
-        required: true,
-
+  },
+  slug: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  coverImage: {
+    id: { 
+      type: String, 
+      required: true 
     },
-
-    coverImage: {
-
-        type: String,
-
-        required: true,
-
+    url: { 
+      type: String, 
+      required: true 
     },
+    width: { 
+      type: Number, 
+      required: true 
+    },
+    height: { 
+      type: Number, 
+      required: true 
+    }
+  },
+  galerieImage: { 
+    type: [ImageSchema],
+     required: true 
+  },
+  description: { 
+    type: String, 
+    required: true 
+  },
+  published: { 
+    type: Boolean, 
+    required: true 
+  }
+});
 
-})
+const WorkModel = models.Work || model<IWork>('Work', WorkSchema);
 
-const WorkModel = models.Work || model<IWork>('Work', WorkSchema)
-
-export default WorkModel
+export default WorkModel;

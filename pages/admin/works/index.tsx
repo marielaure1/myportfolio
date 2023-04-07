@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react'
 import Script from "next/script"
 // import {IonIcon} from "react-ion-icon";
 import { signOut, useSession } from 'next-auth/react'
-import {IonIcon} from "react-ion-icon";
+import { Icon } from '@iconify/react';
+import { CldImage  } from 'next-cloudinary';
 
 type Props = {
     work: IWork[];
@@ -53,28 +54,31 @@ export default function Works({ work }: Props){
                 <header className="banner">
                 <h2>Bienvenue {session?.user?.name}</h2>
                     <h1 className="hoverable-difference animation animation-bounce-letter">Mes travaux</h1>
-                    <Link href="/admin/works/create"  className="btn-admin"><IonIcon name="add-outline"/></Link>
+                    <Link href="/admin/works/create"  className="btn-admin">
+                    <Icon icon="material-symbols:add" />
+                        </Link>
                 </header>
 
-                
-
                 {message && <p>{message}</p>}
-
 
                 <section className="w-full px-[5vw] pb-[5vw]">
                     <div className="w-full box-border grid grid-cols-3 auto-rows-[13vw] gap-[20px]">
                         {works.map((work) => (
                             <div key={work._id} className="card-projet border-b-4 border-solid border-black relative card-projet-admin" >
                                 <Link href={`/admin/works/${work._id}`}>
-                                    {/* <img src={work.coverImage} alt="" className="object-cover object-center w-full h-full"/> */}
+                                    <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="object-cover object-center w-full h-full"/>
                                     <div className="absolute bottom-0 left-0 w-full p-5 text-white bg-black/50 z-[5]">
                                         <h2 className="uppercase font-semibold text-lg mb-2.5">{work.title}</h2>
                                         <p className="text-sm">{work.description}</p>
                                     </div>
                                 </Link>
                                 <div>
-                                    <Link href={`/admin/works/update/${work._id}`} className="btn-admin"><IonIcon name="pencil"></IonIcon></Link>
-                                    <button onClick={() => deleteWork(work._id)} className="btn-admin"><IonIcon name="trash-bin"></IonIcon></button>
+                                    <Link href={`/admin/works/update/${work._id}`} className="btn-admin">
+                                    <Icon icon="mdi:pencil" />
+                                        </Link>
+                                    <button onClick={() => deleteWork(work._id)} className="btn-admin">
+                                    <Icon icon="mdi:bin-empty" />
+                                        </button>
                                 </div>
                             </div>
                          ))}

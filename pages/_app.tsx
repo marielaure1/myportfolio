@@ -21,7 +21,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
           <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js" integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw==" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
 
           
-          <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+          {/* <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script> */}
           {/* <link rel="icon" href="/favicon.ico" /> */}
 
         </Head>
@@ -34,7 +34,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
         </LayoutComponent>
         </SessionProvider>
 
-        <script src="../js/main.js" type="module" ></script>
+        {/* <script src="../js/main.js" type="module" ></script> */}
         
     </>
      

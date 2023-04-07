@@ -14,9 +14,13 @@ export interface IWork{
 
     slug: string;
 
-    coverImage: string;
+    coverImage: { id: string; url: string; width: number; height: number}
+
+    galerieImage: Image[];
 
     description: string;
+
+    published: boolean;
 
 }
 

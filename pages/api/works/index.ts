@@ -4,6 +4,7 @@ import  WorkModel from '@/utils/mongodb/model'
 import { IWork } from '@/@types/work.js'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth/next'
+import { log } from 'console'
 
 type Data = {
     works?: IWork[]
@@ -15,11 +16,7 @@ type Data = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(req, res, authOptions)
 
-    const { title, seo, slug, description, coverImage } = req.body
-
-    console.log(req.body);
-    
-
+    const { title, seo, slug, description, coverImage, galerieImage, published } = req.body
 
     if (req.method === 'POST') {
 
@@ -31,14 +28,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             dbConnect()
 
             // Vérification que tous les champs sont remplie
-            if (!title || !seo.title || !seo.description || !slug || !description || !coverImage){
+            if (!title || !seo.title || !seo.description || !slug || !description || !coverImage.id || !coverImage.width || !coverImage.height || !coverImage.url ){
 
-                const error = {title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage}
+                // const error = {title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: { id: galerieImage.id, width: galerieImage.width, height: galerieImage.height, url: galerieImage.url }, galerieImage: galerieImage, published: published }
 
                 throw new Error("Error Champs")
             }
 
+            console.log("Request : ", req.body);
+            
+
             const workCreate = await WorkModel.create(req.body)
+
+            workCreate.save(function(err: any, work: any) {
+                if (err) {
+                  console.error(err);
+                } else {
+                  console.log(work);
+                }
+              });
+
+            console.log("workCreate : ", workCreate);
+            
 
             if(!workCreate){
                 throw new Error("Error Create")

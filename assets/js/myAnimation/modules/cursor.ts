@@ -56,19 +56,18 @@ export default class Cursor {
     createCursor() {
 
         
-            let cursorBase = this.cursorBase;
-
-            console.log(cursorBase);
+            
 
             let div = document.createElement("div");
             div.classList.add("cursor");
 
-            div.innerHTML = `<div className="cursor-part cursor-base"></div>
-                                <div className="cursor-part cursor-second"></div>`;
+            div.innerHTML = `<div class="cursor-part cursor-base"></div>
+                                <div class="cursor-part cursor-second"></div>`;
 
             
 
             document.body.appendChild(div);
+            
             
             this.initCursor("add")
             
@@ -100,14 +99,13 @@ export default class Cursor {
         this.cursorModeList.forEach((element, index) => {
             $(`.hoverable-${element}`).each((i, e) => {
                 $(e).addClass(`.hoverable-${element}-${i}`)
-                console.log($(e));
                 $(e)
                     .mouseenter(() => {
                         this.initCursor("remove")
                         this.cursor.classList.add(`cursor-${element}`)
 
                         if($(e).attr("data-text")){
-                            this.cursorBase.innerHTML = `<div className="text">
+                            this.cursorBase.innerHTML = `<div class="text">
                                                             <p>${$(e).attr("data-text")}</p>
                                                          </div>`;
                         } 
@@ -127,6 +125,7 @@ export default class Cursor {
 
     initCursor(action = "add"){
         this.cursor = document.querySelector(".cursor")
+        
 
        if(action == "add"){
             this.cursor.classList.add(`cursor-${this.mode}`);
@@ -136,21 +135,21 @@ export default class Cursor {
             this.cursor.classList.remove(`cursor-${this.mode}`);
         }
 
-        this.cursorBase = document.querySelector(".cursor-base");
+        this.cursorBase = document.querySelectorAll(".cursor-base")[0];
         this.cursorSecond = document.querySelector(".cursor-second");
 
         if (this.text && this.mode != "text") {
-        this.cursorBase.innerHTML = `<div className="text">
+        this.cursorBase.innerHTML = `<div class="text">
                                                 <p>${this.text}</p>
                                             </div>`;
         }
 
         if (this.mode == "text") {
-                this.cursor.innerHTML = `<div className="cursor-part cursor-base"></div>`;
+                this.cursor.innerHTML = `<div class="cursor-part cursor-base"></div>`;
         }
 
         if (this.mode == "text-round") {
-        this.cursorSecond.innerHTML = ` <div className="text-round-content">${this.textRoundContent}</div>`;
+        this.cursorSecond.innerHTML = ` <div class="text-round-content">${this.textRoundContent}</div>`;
         }
 
         if(this.mode != "normal"){

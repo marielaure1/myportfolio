@@ -76,14 +76,14 @@ a{
  }
  
  .card-projet-admin > div{
-    @apply h-full w-full items-center justify-center absolute inset-x-0 hidden;
+    @apply h-full w-full items-center justify-center absolute inset-x-0 top-0 hidden;
  }
  
  .card-projet-admin .btn-admin{
     @apply border border-solid border-white;
   }
  
-  .card-projet-admin .btn-admin ion-icon{
+  .card-projet-admin .btn-admin iconify-icon{
     @apply text-white;
  }
  
@@ -124,11 +124,11 @@ input, textarea{
     /* border-radius: 50%; */
  }
 
- .btn-admin ion-icon{
+ .btn-admin iconify-icon{
     @apply text-lg text-black duration-500;
 }
 
-.btn-admin:hover, .btn-admin:hover ion-icon{
+.btn-admin:hover, .btn-admin:hover iconify-icon{
     transform: scale(1.2);
 }
 

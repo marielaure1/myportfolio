@@ -21,7 +21,7 @@ type Data = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(req, res, authOptions)
-    const { title, seo, slug, description, coverImage } = req.body
+    const { title, seo, slug, description, coverImage, galerieImage, published } = req.body
     
                 
     const{
@@ -79,15 +79,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
 
             // Vérification que tous les champs sont remplie
-            if (!title || !seo.title || !seo.description || !slug || !description || !coverImage){
+            if (!title || !seo.title || !seo.description || !slug || !description || !coverImage || !galerieImage || !published){
 
-                const error = {title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage}
+                const error = {title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage, galerieImage: galerieImage, published: published}
 
                 throw new Error("Error Champs")
             }
 
 
-            const updateWork = await WorkModel.updateOne({_id: _id}, { $set : { title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage}})
+            const updateWork = await WorkModel.updateOne({_id: _id}, { $set : { title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage, galerieImage: galerieImage, published: published}})
 
             if(!updateWork){
                 throw new Error('Update Work')
