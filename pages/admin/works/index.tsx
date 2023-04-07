@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { IWork } from '@/@types/work'
+import { IWork, Image } from '@/@types/work'
 import { NextPage } from "next"
 import useSWR, {Fetcher} from 'swr'
 import Link from "next/link"
@@ -13,7 +13,26 @@ import { CldImage  } from 'next-cloudinary';
 
 type Props = {
     work: IWork[];
+    image: Image[];
 }
+
+type Work = {
+    title: string;
+    slug: string;
+    description: string;
+    coverImage: {
+        id: string;
+        url: string;
+        width: number;
+        height: number;
+    };
+    galerieImage: Image[];
+    seo: {
+      title: string;
+      description: string;
+    };
+    published: Boolean;
+  }
 
 export default function Works({ work }: Props){
     const [ message, setMessage ] = useState("");

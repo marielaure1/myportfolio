@@ -25,7 +25,7 @@ const NavComponent: FC = () =>  {
                 
             </nav>
 
-            <div className="menu-content fixed w-[100vw] h-[100vh] bg-white opacity-0 -z-[1] left-0" id="menu">
+            <div className="menu-content fixed w-[100vw] h-[100vh] bg-white opacity-0 -z-[1] left-0 overflow-y-scroll" id="menu">
                 <ul className="pl-[10vw]">
                     <li className="menu-item">
                         <Link href="/" className={router.pathname == "/" ? "active" : ""}>Accueil</Link>

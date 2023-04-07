@@ -1,20 +1,47 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from "next/link"
-import { CldImage  } from 'next-cloudinary';
+import { CldImage  } from 'next-cloudinary'
+import { IWork, Image } from '@/@types/work'
+
+type Props = {
+    work: IWork[];
+    image: Image[];
+}
+
+type Work = {
+    title: string;
+    slug: string;
+    description: string;
+    coverImage: {
+        id: string;
+        url: string;
+        width: number;
+        height: number;
+    };
+    galerieImage: Image[];
+    seo: {
+      title: string;
+      description: string;
+    };
+    published: Boolean;
+  }
+;
 
 export default function Projet() {
     const router = useRouter()
     const { _id } = router.query 
 
     const [ message, setMessage ] = useState("");
-    const [work, setWork] = useState({ 
+    const [work, setWork] = useState<Work>({ 
         title: "",
         seo: { title: "", description: "" },
         slug: "",
-        coverImage: "",
+        coverImage: { id: "", url: "", width: 0, height: 0 },
+        galerieImage: [],
         description: "",
-    });
+        published: true
+    })
 
     const getWork = () => {
         console.log(_id);
@@ -36,6 +63,9 @@ export default function Projet() {
         if(_id){
             getWork()
         }
+
+        console.log(work.coverImage.width);
+        
     }, [_id])
 
     if (work) {
