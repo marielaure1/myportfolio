@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from "next/link"
+import { CldImage  } from 'next-cloudinary';
 
 export default function Projet() {
     const router = useRouter()
@@ -43,6 +44,10 @@ export default function Projet() {
             <header className="banner">
                 <h1>{ work.title }</h1>
             </header>
+            <section className="px-[5vw] pb-[5vw]">
+            <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="w-1/2 bg-black"/>
+            <p>{ work.description }</p>
+            </section>
         </>
     )
     }

@@ -59,7 +59,7 @@ export default function Works({ work }: Props){
                         </Link>
                 </header>
 
-                {message && <p>{message}</p>}
+                {message && <p id="message">{message}</p>}
 
                 <section className="w-full px-[5vw] pb-[5vw]">
                     <div className="w-full box-border grid grid-cols-3 auto-rows-[13vw] gap-[20px]">
@@ -74,10 +74,10 @@ export default function Works({ work }: Props){
                                 </Link>
                                 <div>
                                     <Link href={`/admin/works/update/${work._id}`} className="btn-admin">
-                                    <Icon icon="mdi:pencil" />
+                                    <Icon icon="mdi:pencil" className="text-white"/>
                                         </Link>
                                     <button onClick={() => deleteWork(work._id)} className="btn-admin">
-                                    <Icon icon="mdi:bin-empty" />
+                                    <Icon icon="mdi:bin-empty" className="text-white"/>
                                         </button>
                                 </div>
                             </div>
