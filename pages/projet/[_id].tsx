@@ -64,7 +64,6 @@ export default function Projet() {
             getWork()
         }
 
-        console.log(work.coverImage.width);
         
     }, [_id])
 
@@ -75,7 +74,7 @@ export default function Projet() {
                 <h1>{ work.title }</h1>
             </header>
             <section className="px-[5vw] pb-[5vw]">
-            <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="w-1/2 bg-black"/>
+            {/* <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="w-1/2 bg-black"/> */}
             <p>{ work.description }</p>
             </section>
         </>
