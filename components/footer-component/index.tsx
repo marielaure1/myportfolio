@@ -58,7 +58,7 @@ const FooterComponent: FC = () => {
                     </div>
                     <div className="logo flex items-center justify-center sm:mb-0 mb-4 border-r border-dashed border-black">
                         <Link href="/">
-                            <img src="./img/logo.svg" alt="Marie-Laure Edjour Développeuse web "className="w-20" /> 
+                            <Image src="/img/logo.svg" alt="Marie-Laure Edjour Développeuse web " width={300} height={300} className="w-20"/> 
                         </Link>
                     </div>
                     <div className="coords py-7 text-end">

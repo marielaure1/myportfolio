@@ -123,7 +123,7 @@ export default function CreateWork({ image }: Props){
             <header className="banner">
                 <h1 >Création d'un projet</h1>
                 <Link href="/admin/works" className="btn-admin">
-                <Icon icon="material-symbols:add"/>
+                <Icon icon="material-symbols:format-list-bulleted-rounded" />
                     </Link>
             </header>
 
