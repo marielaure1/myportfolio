@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Link from "next/link"
 import { CldImage  } from 'next-cloudinary'
 import { IWork, Image } from '@/@types/work'
+import { NextPage } from "next"
 
 type Props = {
     work: IWork[];
@@ -26,11 +27,19 @@ type Work = {
     };
     published: Boolean;
   }
-;
+
+
+const SingleWorkPage: NextPage<Props> = ({ work }) => {
+    return (
+        <>
+        <h2>Slug</h2>
+        </>
+    )
+}
 
 export default function Projet() {
     const router = useRouter()
-    const { _id } = router.query 
+    const { slug } = router.query 
 
     const [ message, setMessage ] = useState("");
     const [work, setWork] = useState<Work>({ 
@@ -44,9 +53,9 @@ export default function Projet() {
     })
 
     const getWork = () => {
-        console.log(_id);
+        console.log(slug);
         
-        fetch(`/api/works/${_id}`, { method: "GET"})
+        fetch(`/api/works/${slug}`, { method: "GET"})
         .then(response => response.json())
         .then((json) => {
             
@@ -60,12 +69,12 @@ export default function Projet() {
     } 
 
     useEffect(() => {
-        if(_id){
+        if(slug){
             getWork()
         }
 
         
-    }, [_id])
+    }, [slug])
 
     if (work) {
           return (

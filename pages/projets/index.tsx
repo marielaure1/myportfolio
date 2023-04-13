@@ -32,8 +32,8 @@ export default function Projets({ work }: Props){
                 <h1>Mes projets</h1>
             </header>
 
-            <section className="w-full md:px-[5vw] px-0 pb-[5vw]">
-                <div className="w-full box-border grid md:grid-cols-3 grid-cols-2 auto-rows-[13vw] md:gap-[20px] gap-[10px]">
+            <section className="w-full px-[5vw] pb-[5vw]">
+                <div className="w-full box-border grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 auto-rows-[13vw] md:gap-[20px] gap-[10px]">
                     {works?.map((work) => {
                         if(work.published) {
                             return (

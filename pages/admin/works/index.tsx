@@ -81,7 +81,7 @@ export default function Works({ work }: Props){
                 {message && <p id="message">{message}</p>}
 
                 <section className="w-full px-[5vw] pb-[5vw]">
-                    <div className="w-full box-border grid grid-cols-3 auto-rows-[13vw] gap-[20px]">
+                    <div className="w-full box-border grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1  auto-rows-[13vw] gap-[20px]">
                         {works.map((work) => (
                             <div key={work._id} className="card-projet border-b-4 border-solid border-black relative card-projet-admin" >
                                 <Link href={`/admin/works/${work._id}`}>

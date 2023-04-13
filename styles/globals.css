@@ -67,6 +67,37 @@ a{
     grid-row: span 3;
 }
 
+@media (max-width: 768px){
+    .card-projet:nth-child(3n+1){
+        grid-row: span 4;
+    }
+    
+    .card-projet:nth-child(3n+2){
+        grid-row: span 3;
+    }
+    
+    .card-projet:nth-child(3n+3){
+        grid-row: span 4;
+    }
+    
+}
+
+@media (max-width: 576px){
+
+    .card-projet:nth-child(3n+1){
+        grid-row: span 3;
+    }
+    
+    .card-projet:nth-child(3n+2){
+        grid-row: span 3;
+    }
+    
+    .card-projet:nth-child(3n+3){
+        grid-row: span 3;
+    }
+    
+}
+
 .card-projet-admin{
     @apply overflow-hidden;
  }
@@ -108,7 +139,7 @@ input, textarea{
 
 #message{
     @apply block text-white p-[20px] fixed right-0 bottom-0;
-    background-color: theme(colors.cl-black);
+    background-color: #171717;
 }
 
 .champs{
@@ -148,7 +179,7 @@ input, textarea{
 }
 
 #menu .menu-item a{
-    @apply text-[13vh] tracking-[10px] uppercase font-semibold text-white;
+    @apply lg:text-[13vh] text-[10vw] tracking-[10px] uppercase font-semibold text-white;
     -webkit-text-stroke: 1px var(--cl);
     font-family: Helvetica, sans-serif;
 }

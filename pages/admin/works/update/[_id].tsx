@@ -166,7 +166,7 @@ export default function UpdateWork(){
 
                 {message && <p id="message">{message}</p>}
 
-                <section className="w-full px-[5vw] pb-[5vw] grid grid-cols-2 gap-[50px]">
+                <section className="w-full px-[5vw] pb-[5vw] grid md:grid-cols-2 grid-cols-1 gap-[50px]">
 
                     <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
 

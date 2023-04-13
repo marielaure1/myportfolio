@@ -32,6 +32,7 @@ export default function Home() {
                 </div>
                 <div className="flex">
                     <div className="lg:w-2/3 border-r border-dashed border-black sm:py-[5vw] py-[80px] sm:px-[50px] px-[20px] flex flex-col justify-center w-full">
+                        <h3 className="title-section-home-mobile">A propos</h3>
                         <APropos/>
                     </div>
                     {/* <div className="w-1/3 bg-[url('../public/img/6.jpg')] bg-cover bg-center w-[30%] h-full lg:block hidden"></div> */}

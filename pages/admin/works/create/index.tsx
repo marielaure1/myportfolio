@@ -129,7 +129,7 @@ export default function CreateWork({ image }: Props){
 
             {message && <p id="message">{message}</p>}
 
-            <section className="w-full px-[5vw] pb-[5vw] grid grid-cols-2 gap-[50px]">
+            <section className="w-full px-[5vw] pb-[5vw] grid md:grid-cols-2 grid-cols-1 gap-[50px]">
 
                 <form onSubmit={handleSubmit} className="flex flex-col pl-[50px]">
                     <input type="text" id="title" name="title" placeholder="Titre du projet" value={workCreate.title} onChange={handleChange}  className="champs"/>
@@ -198,11 +198,14 @@ export default function CreateWork({ image }: Props){
                 </div>
                 
             </section>
-            <section className="grid grid-cols-4 gap-3 px-[5vw] pb-[5vw]">
-                {workCreate?.galerieImage?.map((image) => (
-                    <CldImage key={ image.id } width={ image.width } height={ image.height } src={ image.id } alt="Description of my image" />
-                ))}
-            </section>
+            {workCreate?.galerieImage && 
+                 <section className="grid grid-cols-4 gap-3 px-[5vw] pb-[5vw]">
+                    {workCreate?.galerieImage?.map((image) => (
+                        <CldImage key={ image.id } width={ image.width } height={ image.height } src={ image.id } alt="Description of my image" />
+                    ))}
+                </section>
+            }
+           
         </>
     )
 }
