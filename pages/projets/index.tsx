@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+// import { GetStaticProps } from 'next';
 import { IWork } from '@/@types/work'
 import useSWR, {Fetcher} from 'swr'
 import Link from "next/link"
@@ -61,4 +62,24 @@ export default function Projets({ work }: Props){
     )
 }
 
-
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/works`);
+      const json = await response.json();
+      return { props: { work: json.works } };
+    } catch (error) {
+      console.error(error);
+      return { props: { work: null } };
+    }
+  };
+// export const getStaticProps: GetStaticProps = async () => {
+//     const res = await fetch('/api/works');
+//     const json = await res.json();
+//     const works = json.works;
+    
+//     return {
+//         props: {
+//             work: works,
+//         },
+//     };
+// };
