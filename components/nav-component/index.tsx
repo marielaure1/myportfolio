@@ -46,14 +46,7 @@ const NavComponent: FC = () =>  {
                             <li className="menu-item">
                                 <Link href="/admin/works" className={router.pathname == "/admin/works" ? "active" : ""}>Admin</Link>
                             </li>
-                            <button onClick={() => signOut()}>Se déconnecter</button>
-                        </>
-                    )}
-                    {!session?.user && (
-                        <>
-                            <li className="menu-item">
-                                <Link href="/api/auth/signin/credentails">Se connecter</Link>
-                            </li>
+                            <button onClick={() => signOut()} className="uppercase">Se déconnecter</button>
                         </>
                     )}
                     
