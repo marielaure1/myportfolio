@@ -4,8 +4,6 @@ import Link from "next/link"
 import { useEffect, useState } from 'react'
 import {  CldImage  } from 'next-cloudinary';
 
-const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME} = process.env
-
 type Props = {
     work: IWork[];
 }
@@ -40,20 +38,7 @@ export default function Projets({ work }: Props){
                                 <div key={work._id} className="card-projet border-b-4 border-black relative hoverable-text" data-text={ work.title } >
                                     <Link href={`/projet/${work._id}`}>
                                     
-                                        {/* <CldImage width={ 600 } height={ 600 } src={ work.coverImage.id } publicId={work.coverImage.id} placeholder="blur:100" sizes="(min-width: 480px ) 50vw, (min-width: 728px) 33vw, (min-width: 976px) 25vw, 100vw" alt="Développeur web freelance, création de site web"  className="object-cover object-center w-full h-full" loading="lazy"/> */}
-                                        
-                                        <CldImage
-                                        cloudName={NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
-                                        publicId={work.coverImage.id}
-                                        width={600}
-                                        height={600}
-                                        crop="fill"
-                                        loading="lazy"
-                                        placeholder="blur:100"
-                                        sizes="(min-width: 480px ) 50vw, (min-width: 728px) 33vw, (min-width: 976px) 25vw, 100vw"
-                                        alt={work.title}
-                                        className="object-cover object-center w-full h-full"
-                                        />
+                                        <CldImage width={ 600 } height={ 600 } src={ work.coverImage.id } sizes="(min-width: 480px ) 50vw, (min-width: 728px) 33vw, (min-width: 976px) 25vw,100vw" alt="Développeur web freelance, création de site web"  className="object-cover object-center w-full h-full" loading="lazy"/>
                                         <div className="absolute bottom-0 left-0 w-full p-5 text-white bg-black/50">
                                             <h2 className="uppercase font-semibold text-lg mb-2.5">{work.title}</h2>
                                             <p className="text-sm">{work.description}</p>

@@ -89,8 +89,23 @@ export default function Projet() {
                     <h1>{ work.title }</h1>
                 </header>
                 <section className="px-[5vw] pb-[5vw]">
-                {/* <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="w-1/2 bg-black"/> */}
-                <p>{ work.description }</p>
+                
+                    <div className='w-full border-b-2 border-black border-solid pb-2 mb-20'>
+                       <p className="text-end">Categorie</p>
+                    </div>
+                    <div className='flex'>
+                        <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Développeuse web freelance"  className="w-2/3 bg-black"/>
+                        <div className='w-1/3 pt-[60px]'>
+                            
+                            <p className="text-end italic mb-6">{ work.description }</p>
+                            <Link href="#" target="_blank" className="form-btn float-right">Voir le site</Link>
+                        </div>
+                    </div>
+                    <div className='grid md:grid-cols-2 grid-cols-1 gap-4 mt-20'>
+                        { work.galerieImage.map((img) => (
+                             <CldImage key={ img.id } width={ img.width } height={ img.height } src={ img.id } alt="Développeuse web freelance" className="w-full projet-galerie"/>
+                        ))}
+                    </div>
                 </section>
             </>
         )
