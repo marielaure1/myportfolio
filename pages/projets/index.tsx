@@ -1,7 +1,5 @@
 import { GetServerSideProps } from 'next'
-// import { GetStaticProps } from 'next';
 import { IWork } from '@/@types/work'
-import useSWR, {Fetcher} from 'swr'
 import Link from "next/link"
 import { useEffect, useState } from 'react'
 import {  CldImage  } from 'next-cloudinary';
@@ -12,7 +10,6 @@ type Props = {
 
 export default function Projets({ work }: Props){
     const [ works, setWorks ] = useState<IWork[] | null>(null);
-    const [ isLoading, setIsLoading ] = useState(false);
     
     useEffect(() => {
         fetch(`/api/works`)
@@ -20,7 +17,6 @@ export default function Projets({ work }: Props){
         .then((json) => {
             
             setWorks(json.works)
-            setIsLoading(false)
 
              console.log(json)
         })
@@ -72,14 +68,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
       return { props: { work: null } };
     }
   };
-// export const getStaticProps: GetStaticProps = async () => {
-//     const res = await fetch('/api/works');
-//     const json = await res.json();
-//     const works = json.works;
-    
-//     return {
-//         props: {
-//             work: works,
-//         },
-//     };
-// };
+
