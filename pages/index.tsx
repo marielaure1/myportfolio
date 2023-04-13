@@ -44,22 +44,22 @@ export default function Home() {
                     
                 <div className="w-full h-full grid sm:grid-cols-10 sm:grid-rows-10 grid-cols-2 grid-rows-3 gap-px bg-black min-h-[500px] sm:mt-0 mt-10">
                     <div className="projet sm:col-start-1 sm:col-end-4 sm:row-start-1 sm:row-end-6 overflow-hidden flex items-center justify-center relative hoverable-text" data-text="projet1">
-                        <img src="./img/works/1.jpg" alt="" className="object-cover object-center h-full w-full absolute"/>
+                        <img src="./img/works/1.jpg" alt="Marie-Laure Edjour Développeuse web" className="object-cover object-center h-full w-full absolute"/>
                     </div>
                     <div className="projet sm:col-start-4 sm:col-end-8 sm:row-start-1 sm:row-end-7 overflow-hidden flex items-center justify-center relative hoverable-text" data-text="projet2">
-                        <img src="./img/works/2.jpg" alt="" className="object-cover object-center h-full w-full absolute"/>
+                        <img src="./img/works/2.jpg" alt="Marie-Laure Edjour Développeuse web" className="object-cover object-center h-full w-full absolute"/>
                     </div>
                     <div className="projet sm:col-start-8 sm:col-end-11 sm:row-start-1 sm:row-end-6 overflow-hidden flex items-center justify-center relative hoverable-text" data-text="projet3">
-                        <img src="./img/works/3.jpg" alt="" className="object-cover object-center h-full w-full absolute"/>
+                        <img src="./img/works/3.jpg" alt="Marie-Laure Edjour Développeuse web" className="object-cover object-center h-full w-full absolute"/>
                     </div>
                     <div className="projet sm:col-start-1 sm:col-end-4 sm:row-start-6 sm:row-end-[11] overflow-hidden flex items-center justify-center relative hoverable-text" data-text="projet4">
-                        <img src="./img/works/4.jpg" alt="" className="object-cover object-center h-full w-full absolute"/>
+                        <img src="./img/works/4.jpg" alt="Marie-Laure Edjour Développeuse web" className="object-cover object-center h-full w-full absolute"/>
                     </div>
                     <div className="projet sm:col-start-4 sm:col-end-8 sm:row-start-[7] sm:row-end-[11] overflow-hidden flex items-center justify-center relative hoverable-text" data-text="projet5">
-                        <img src="./img/works/3.jpg" alt="" className="object-cover object-center h-full w-full absolute"/>
+                        <img src="./img/works/3.jpg" alt="Marie-Laure Edjour Développeuse web" className="object-cover object-center h-full w-full absolute"/>
                     </div>
                     <div className="projet sm:col-start-8 sm:col-end-11 sm:row-start-6 sm:row-end-[11] overflow-hidden flex items-center justify-center relative hoverable-text" data-text="projet6">
-                        <img src="./img/works/4.jpg" alt="" className="object-cover object-center h-full w-full absolute"/>
+                        <img src="./img/works/4.jpg" alt="Marie-Laure Edjour Développeuse web" className="object-cover object-center h-full w-full absolute"/>
                     </div>
                     
                 </div>

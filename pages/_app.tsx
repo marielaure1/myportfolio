@@ -10,7 +10,20 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     <>
         <Head>
 
-          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          
+          <title>Marie-Laure Edjour</title>
+
+          <meta charSet="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <link rel="shortcut icon" href="./assets/static/img/brainst_logo_noir-blanc.svg" type="image/x-icon" />
+          <meta name="description" content="Besoin d'un développeur web freelance compétent pour créer votre site web? Avec mes compétences en HTML, CSS, JavaScript et PHP, je peux concevoir des sites performants et esthétiques. Contactez-moi dès maintenant!" />
+
+          <meta property="og:locale" content="fr_FR" />
+          <meta property="og:type" content="siteweb" />
+          <meta property="og:url" content="https://marie-laure-edjour.netlify.app/" />
+          <meta property="og:image" content="logo.png" />
+          <meta property="og:site_name" content="Marie-Laure Edjour Développeuse web" />
+          <meta property="og:description" content="Besoin d'un développeur web freelance compétent pour créer votre site web? Avec mes compétences en HTML, CSS, JavaScript et PHP, je peux concevoir des sites performants et esthétiques. Contactez-moi dès maintenant!"/>
 
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { CldImage  } from 'next-cloudinary'
 import { IWork, Image } from '@/@types/work'
 import { NextPage } from "next"
+import Head from "next/head"
 
 type Props = {
     work: IWork[];
@@ -77,17 +78,22 @@ export default function Projet() {
     }, [slug])
 
     if (work) {
-          return (
-        <>
-            <header className="banner">
-                <h1>{ work.title }</h1>
-            </header>
-            <section className="px-[5vw] pb-[5vw]">
-            {/* <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="w-1/2 bg-black"/> */}
-            <p>{ work.description }</p>
-            </section>
-        </>
-    )
+        return (
+            <>
+                <Head>
+                    <title>{ work.seo.title }</title>
+                    <meta name="description" content={ work.seo.description } />
+                    <meta property="og:description" content={ work.seo.description } />
+                </Head>
+                <header className="banner">
+                    <h1>{ work.title }</h1>
+                </header>
+                <section className="px-[5vw] pb-[5vw]">
+                {/* <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Description of my image"  className="w-1/2 bg-black"/> */}
+                <p>{ work.description }</p>
+                </section>
+            </>
+        )
     }
 
   
