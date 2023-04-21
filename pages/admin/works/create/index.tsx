@@ -25,6 +25,10 @@ type WorkCreate = {
       description: string;
     };
     published: Boolean;
+    link: string;
+    category: string;
+    github: string;
+    figma: string;
   }
 
 const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
@@ -38,7 +42,11 @@ export default function CreateWork({ image }: Props){
         coverImage: { id: "", url: "", width: 0, height: 0 },
         galerieImage: [],
         description: "",
-        published: true
+        published: true,
+        link: "",
+        category: "",
+        github: "",
+        figma: ""
     })
 
     useEffect(() => {
@@ -81,7 +89,11 @@ export default function CreateWork({ image }: Props){
             title: id === 'seo.title' ? value : prev.seo.title,
             description: id === 'seo.description' ? value : prev.seo.description,
           },
-          published: name === 'published' ? value === 'true' : prev.published
+          published: name === 'published' ? value === 'true' : prev.published,
+          category: id === 'category' ? value : prev.category,
+          link: id === 'link' ? value : prev.link,
+          github: id === 'github' ? value : prev.github,
+          figma: id === 'figma' ? value : prev.figma
         }));
       };
 
@@ -169,6 +181,11 @@ export default function CreateWork({ image }: Props){
                     <h2 className='my-[20px]'>SEO</h2>
                     <input type="text" id="seo.title"  placeholder="Titre seo du projet" value={workCreate.seo.title} onChange={handleChange}  className="champs"/>
                     <textarea id="seo.description" placeholder="Description seo du projet" value={workCreate.seo.description} onChange={handleChange} className="champs"></textarea>
+
+                    <input type="text" id="category"  placeholder="Categorie du projet" value={workCreate.category} onChange={handleChange}  className="champs"/>
+                    <input type="text" id="link"  placeholder="Lien du projet" value={workCreate.link} onChange={handleChange}  className="champs"/>
+                    <input type="text" id="github" placeholder="Github du projet" value={workCreate.github} onChange={handleChange} className="champs" />
+                    <input type="text" id="figma" placeholder="Figma du projet" value={workCreate.figma} onChange={handleChange} className="champs" />
 
                     <label>
                         Publié :

@@ -22,5 +22,13 @@ export interface IWork{
 
     published: boolean;
 
+    link: string;
+
+    category: string;
+
+    github: string;
+
+    figma: string;
+
 }
 

@@ -21,7 +21,7 @@ type Data = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(req, res, authOptions)
-    const { title, seo, slug, description, coverImage, galerieImage, published } = req.body
+    const { title, seo, slug, description, coverImage, galerieImage, published, category, link, github, figma  } = req.body
     
                 
     const{
@@ -87,7 +87,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
 
 
-            const updateWork = await WorkModel.updateOne({_id: _id}, { $set : { title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage, galerieImage: galerieImage, published: published}})
+            const updateWork = await WorkModel.updateOne({_id: _id}, { $set : { title: title, seo: {title: seo.title, description: seo.description}, slug: slug, description: description, coverImage: coverImage, galerieImage: galerieImage, published: published, category: category, link: link, github: github, figma: figma }})
 
             if(!updateWork){
                 throw new Error('Update Work')

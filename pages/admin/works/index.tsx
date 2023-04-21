@@ -32,6 +32,8 @@ type Work = {
       description: string;
     };
     published: Boolean;
+    github: string;
+    figma: string;
   }
 
 export default function Works({ work }: Props){

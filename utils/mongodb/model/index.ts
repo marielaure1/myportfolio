@@ -72,6 +72,18 @@ const WorkSchema: Schema = new Schema<IWork>({
   published: { 
     type: Boolean, 
     required: true 
+  },
+  link: { 
+    type: String 
+  },
+  category: { 
+    type: String 
+  },
+  github: {
+    type: String
+  }, 
+  figma: {
+    type: String
   }
 });
 

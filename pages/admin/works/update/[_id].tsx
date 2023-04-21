@@ -27,6 +27,10 @@ type WorkEdit = {
       description: string;
     };
     published: Boolean;
+    category: string;
+    link: string,
+    github: string,
+    figma: string
   }
 
 const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
@@ -43,16 +47,20 @@ export default function UpdateWork(){
         coverImage: { id: "", url: "", width: 0, height: 0 },
         galerieImage: [],
         description: "",
-        published: true
+        published: true,
+        category: "",
+        link: "",
+        github: "",
+        figma: ""
     })
-    useEffect(() => {
-        if (!['true', 'false'].includes(String(workEdit.published))) {
-          setWorkEdit(prev => ({
-            ...prev,
-            published: true
-          }));
-        }
-      }, [workEdit.published]);
+    // useEffect(() => {
+    //     if (!['true', 'false'].includes(String(workEdit.published))) {
+    //       setWorkEdit(prev => ({
+    //         ...prev,
+    //         published: true
+    //       }));
+    //     }
+    //   }, [workEdit.published]);
 
     useEffect(() => {
         if(_id){
@@ -113,7 +121,11 @@ export default function UpdateWork(){
             title: id === 'seo.title' ? value : prev.seo.title,
             description: id === 'seo.description' ? value : prev.seo.description,
           },
-          published: name === 'published' ? value === 'true' : prev.published
+          published: name === 'published' ? value === 'true' : prev.published,
+          category: id === 'category' ? value : prev.category,
+          link: id === 'link' ? value : prev.link,
+          github: id === 'github' ? value : prev.github,
+          figma: id === 'figma' ? value : prev.figma
         }));
       };
 
@@ -207,6 +219,11 @@ export default function UpdateWork(){
                         <input type="text" id="slug" name="slug" placeholder="Slug du projet" value={workEdit.slug} onChange={handleChange} className="champs"  />
                        
                         <textarea name="description" id="description" placeholder="Description du projet" value={workEdit.description} onChange={handleChange} className="champs" ></textarea>
+
+                        <input type="text" id="category" name="category" placeholder="Categorie du projet" value={workEdit.category} onChange={handleChange} className="champs"  />
+                        <input type="text" id="link" name="link" placeholder="Lien du projet" value={workEdit.link} onChange={handleChange} className="champs"  />
+                        <input type="text" id="github" name="github" placeholder="Github du projet" value={workEdit.github} onChange={handleChange} className="champs" />
+                        <input type="text" id="figma" name="figma" placeholder="Figma du projet" value={workEdit.figma} onChange={handleChange} className="champs" />
 
                         <label>
                         Publié :

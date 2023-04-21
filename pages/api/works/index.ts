@@ -16,7 +16,7 @@ type Data = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(req, res, authOptions)
 
-    const { title, seo, slug, description, coverImage, galerieImage, published } = req.body
+    const { title, seo, slug, description, coverImage, galerieImage, published, category, link, github, figma } = req.body
 
     if (req.method === 'POST') {
 
