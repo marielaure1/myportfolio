@@ -10,8 +10,6 @@ let cached = global.mongoose
 
 if (!cached) cached = global.mongoose = { conn: null }
 
-
-
 export const dbConnect = async () => {
 
     if (cached.conn) return cached.conn

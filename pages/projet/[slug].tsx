@@ -40,7 +40,7 @@ const SingleWorkPage: NextPage<Props> = ({ work }) => {
 
 export default function Projet() {
     const router = useRouter()
-    const { slug } = router.query 
+    const { _id } = router.query 
 
     const [ message, setMessage ] = useState("");
     const [work, setWork] = useState<Work>({ 
@@ -54,9 +54,9 @@ export default function Projet() {
     })
 
     const getWork = () => {
-        console.log(slug);
+        console.log(_id);
         
-        fetch(`/api/works/${slug}`, { method: "GET"})
+        fetch(`/api/works/${_id}`, { method: "GET"})
         .then(response => response.json())
         .then((json) => {
             
@@ -70,12 +70,12 @@ export default function Projet() {
     } 
 
     useEffect(() => {
-        if(slug){
+        if(_id){
             getWork()
         }
 
         
-    }, [slug])
+    }, [_id])
 
     if (work) {
         return (

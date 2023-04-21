@@ -62,7 +62,7 @@
         top: 0;
         left: 0;
         z-index: 200;
-        background-color: black;
+        background-color: transparent;
     }
 
     .cursor-base{
@@ -204,6 +204,28 @@
                 mix-blend-mode: difference;
             }
         }
+    }
+}
+
+.cursor.cursor-size{
+
+    .cursor-part{
+        border-radius: 0;
+        background-color: none;
+    }
+    
+    .cursor-second {
+        border: 1.5px solid red;
+        background-color: transparent;
+    }
+    .cursor-base {
+        background-color: red;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
     }
 }
 
