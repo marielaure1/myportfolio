@@ -5,6 +5,7 @@ import { CldImage  } from 'next-cloudinary'
 import { IWork, Image } from '@/@types/work'
 import { NextPage } from "next"
 import Head from "next/head"
+import { Icon } from '@iconify/react';
 
 type Props = {
     work: IWork[];
@@ -29,6 +30,8 @@ type Work = {
     published: Boolean;
     link: string;
     category: string;
+    github: string;
+    figma: string;
 }
 
 // const SingleWorkPage: NextPage<Props> = ({ work }) => {
@@ -53,7 +56,9 @@ export default function Projet() {
         description: "",
         published: true,
         link: "",
-        category: ""
+        category: "",
+        github: "",
+        figma: ""
     })
 
     const getWork = () => {
@@ -94,18 +99,24 @@ export default function Projet() {
                 <section className="px-[5vw] pb-[5vw]">
                 
                     <div className='w-full border-b-2 border-black border-solid pb-2 mb-20'>
-                       <p className="text-end">Categorie</p>
+                       
+                       { work.category &&  <p className="text-end">Categorie</p> }
                     </div>
                     <div className='flex'>
                         <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Développeuse web freelance"  className="w-2/3 bg-black"/>
                         <div className='w-1/3 pt-[60px]'>
                             
                             <p className="text-end italic mb-6">{ work.description }</p>
-                            <Link href="#" target="_blank" className="form-btn float-right">Voir le site</Link>
+                            { work.link &&  <Link href={work.link} target="_blank" className="form-btn float-right">Voir le site</Link> }
+                            <div className='flex float-right'>
+                            { work.github &&  <Link href={work.github} target="_blank" className="form-btn"> <Icon icon="mdi:github" /></Link> }
+                            { work.figma &&  <Link href={work.figma} target="_blank" className="form-btn"><Icon icon="logos:figma" /></Link> }
+                            </div>
+                            
                         </div>
                     </div>
                     <div className='grid md:grid-cols-2 grid-cols-1 gap-4 mt-20'>
-                        { work.galerieImage.map((img) => (
+                        { work.galerieImage?.map((img) => (
                              <CldImage key={ img.id } width={ img.width } height={ img.height } src={ img.id } alt="Développeuse web freelance" className="w-full projet-galerie"/>
                         ))}
                     </div>
