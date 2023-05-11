@@ -5,6 +5,7 @@ import { IWork } from '@/@types/work.js'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth/next'
 import { log } from 'console'
+import { watch } from 'fs/promises'
 
 type Data = {
     works?: IWork[]
@@ -16,7 +17,7 @@ type Data = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(req, res, authOptions)
 
-    const { title, seo, slug, description, coverImage, galerieImage, published, category, link, github, figma, colorbg, colorTxt } = req.body
+    const { title, seo, slug, description, coverImage, galerieImage, published, category, link, github, figma, colorbg, colortxt } = req.body
 
     if (req.method === 'POST') {
 
@@ -37,15 +38,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             console.log("Request : ", req.body);
             
-            const workCreate = await WorkModel.create(req.body)
-
-            workCreate.save(function(err: any, work: any) {
-                if (err) {
-                  console.error(err);
-                } else {
-                  console.log(work);
-                }
-              });
+            const w = new WorkModel(req.body)
+            const workCreate = await w.save()
 
             console.log("workCreate : ", workCreate);
 
