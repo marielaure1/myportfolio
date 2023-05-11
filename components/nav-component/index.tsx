@@ -10,6 +10,7 @@ const NavComponent: FC = () =>  {
     const { data: session } = useSession()
     const router = useRouter();
     
+    
     return (
         <>
             <nav className="w-full h-[100px] py-[20px] px-[5vw] flex justify-between fixed z-40" >
