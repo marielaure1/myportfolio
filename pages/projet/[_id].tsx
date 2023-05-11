@@ -32,6 +32,8 @@ type Work = {
     category: string;
     github: string;
     figma: string;
+    colorbg: string;
+    colortxt: string;
 }
 
 // const SingleWorkPage: NextPage<Props> = ({ work }) => {
@@ -58,7 +60,9 @@ export default function Projet() {
         link: "",
         category: "",
         github: "",
-        figma: ""
+        figma: "",
+        colorbg: "",
+        colortxt: ""
     })
 
     const getWork = () => {
@@ -69,7 +73,20 @@ export default function Projet() {
         .then((json) => {
             
             setWork(json.works)
-            console.log(json);
+            console.log(json.works);
+
+            if(json.works.colorbg){
+                document.body.style.backgroundColor = `${json.works.colorbg}!important`
+            }
+
+            if(document.querySelectorAll(".colortxt")[0]){
+                document.querySelectorAll(".colortxt").forEach((element) => {
+                    if(json.works.colortxt ){
+                        // element.style.color = `${json.works.colortxt}!important`
+                    }
+                })
+            }
+            
             
         })
         .catch((error) => {
@@ -78,6 +95,7 @@ export default function Projet() {
     } 
 
     useEffect(() => {
+        
         if(_id){
             getWork()
         }
@@ -94,30 +112,34 @@ export default function Projet() {
                     <meta property="og:description" content={ work.seo.description } />
                 </Head>
                 <header className="banner">
-                    <h1>{ work.title }</h1>
+                    <h1 className='colortxt'>{ work.title }</h1>
                 </header>
                 <section className="px-[5vw] pb-[5vw]">
                 
                     <div className='w-full border-b-2 border-black border-solid pb-2 mb-20'>
                        
-                       { work.category &&  <p className="text-end">Categorie</p> }
+                       { work.category &&  <p className="text-end colortxt">{work.category}</p> }
                     </div>
                     <div className='flex'>
-                        <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Développeuse web freelance"  className="w-2/3 bg-black"/>
-                        <div className='w-1/3 pt-[60px]'>
-                            
-                            <p className="text-end italic mb-6">{ work.description }</p>
-                            { work.link &&  <Link href={work.link} target="_blank" className="form-btn float-right">Voir le site</Link> }
-                            <div className='flex float-right'>
-                            { work.github &&  <Link href={work.github} target="_blank" className="form-btn"> <Icon icon="mdi:github" /></Link> }
-                            { work.figma &&  <Link href={work.figma} target="_blank" className="form-btn"><Icon icon="logos:figma" /></Link> }
+                        {/* <CldImage width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.id } alt="Développeuse web freelance"  className="w-2/3 bg-black"/> */}
+                        <img width={ work.coverImage.width } height={ work.coverImage.height } src={ work.coverImage.url } alt="Développeuse web freelance"  className="w-2/3 bg-black"/>
+                        <div className='w-1/3 pt-[60px] pl-[30px]'>
+                        
+                            <div className='flex flex-col items-end'>
+                                <p className="text-end italic mb-6 colortxt">{ work.description }</p>
+                                { work.link &&  <Link href={work.link} target="_blank" className="form-btn mb-6">Voir le site</Link> }
+                            </div>
+                            <div className='flex justify-end'>
+                                { work.github &&  <Link href={work.github} target="_blank" className="text-end text-4xl"> <Icon icon="mdi:github" /></Link> }
+                                { work.figma &&  <Link href={work.figma} target="_blank" className="text-end"><Icon icon="logos:figma" /></Link> }
                             </div>
                             
                         </div>
                     </div>
                     <div className='grid md:grid-cols-2 grid-cols-1 gap-4 mt-20'>
                         { work.galerieImage?.map((img) => (
-                             <CldImage key={ img.id } width={ img.width } height={ img.height } src={ img.id } alt="Développeuse web freelance" className="w-full projet-galerie"/>
+                            //  <CldImage key={ img.id } width={ img.width } height={ img.height } src={ img.url } alt="Développeuse web freelance" className="w-full projet-galerie"/>
+                             <img key={ img.id } width={ img.width } height={ img.height } src={ img.url } alt="Développeuse web freelance" className="w-full projet-galerie"/>
                         ))}
                     </div>
                 </section>

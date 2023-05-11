@@ -29,6 +29,8 @@ type WorkCreate = {
     category: string;
     github: string;
     figma: string;
+    colorbg: string;
+    colortxt: string;
   }
 
 const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
@@ -46,7 +48,9 @@ export default function CreateWork({ image }: Props){
         link: "",
         category: "",
         github: "",
-        figma: ""
+        figma: "",
+        colorbg: "",
+        colortxt: ""
     })
 
     useEffect(() => {
@@ -93,7 +97,9 @@ export default function CreateWork({ image }: Props){
           category: id === 'category' ? value : prev.category,
           link: id === 'link' ? value : prev.link,
           github: id === 'github' ? value : prev.github,
-          figma: id === 'figma' ? value : prev.figma
+          figma: id === 'figma' ? value : prev.figma,
+          colorbg: id === 'colorbg' ? value : prev.colorbg,
+          colortxt: id === 'colortxt' ? value : prev.colortxt
         }));
       };
 
@@ -186,6 +192,8 @@ export default function CreateWork({ image }: Props){
                     <input type="text" id="link"  placeholder="Lien du projet" value={workCreate.link} onChange={handleChange}  className="champs"/>
                     <input type="text" id="github" placeholder="Github du projet" value={workCreate.github} onChange={handleChange} className="champs" />
                     <input type="text" id="figma" placeholder="Figma du projet" value={workCreate.figma} onChange={handleChange} className="champs" />
+                    <input type="text" id="colorbg" placeholder="colorbg du projet" value={workCreate.colorbg} onChange={handleChange} className="champs" />
+                    <input type="text" id="colortxt" placeholder="colortxt du projet" value={workCreate.colortxt} onChange={handleChange} className="champs" />
 
                     <label>
                         Publié :

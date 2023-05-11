@@ -30,5 +30,9 @@ export interface IWork{
 
     figma: string;
 
+    colorbg: string;
+
+    colortxt: string;
+
 }
 

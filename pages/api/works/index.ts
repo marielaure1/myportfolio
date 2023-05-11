@@ -16,7 +16,7 @@ type Data = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(req, res, authOptions)
 
-    const { title, seo, slug, description, coverImage, galerieImage, published, category, link, github, figma } = req.body
+    const { title, seo, slug, description, coverImage, galerieImage, published, category, link, github, figma, colorbg, colorTxt } = req.body
 
     if (req.method === 'POST') {
 
@@ -37,7 +37,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             console.log("Request : ", req.body);
             
-
             const workCreate = await WorkModel.create(req.body)
 
             workCreate.save(function(err: any, work: any) {
@@ -49,7 +48,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               });
 
             console.log("workCreate : ", workCreate);
-            
 
             if(!workCreate){
                 throw new Error("Error Create")

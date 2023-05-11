@@ -34,6 +34,8 @@ type Work = {
     published: Boolean;
     github: string;
     figma: string;
+    colorbg: string;
+    colortxt: string;
   }
 
 export default function Works({ work }: Props){

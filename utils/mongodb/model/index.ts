@@ -74,18 +74,31 @@ const WorkSchema: Schema = new Schema<IWork>({
     required: true 
   },
   link: { 
-    type: String 
+    type: String ,
+    default: ""
   },
   category: { 
-    type: String 
+    type: String,
+    default: "" 
   },
   github: {
-    type: String
+    type: String,
+    default: ""
   }, 
   figma: {
-    type: String
+    type: String,
+    default: ""
+  },
+  colorbg: {
+    type: String,
+    default: ""
+  },
+  colortxt: {
+    type: String,
+    default: ""
   }
 });
+
 
 const WorkModel = models.Work || model<IWork>('Work', WorkSchema);
 

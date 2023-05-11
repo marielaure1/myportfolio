@@ -30,7 +30,9 @@ type WorkEdit = {
     category: string;
     link: string,
     github: string,
-    figma: string
+    figma: string,
+    colorbg: string;
+    colortxt: string;
   }
 
 const {NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, NEXT_PUBLIC_CLOUDINARY_API_KEY,NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET } = process.env
@@ -51,7 +53,9 @@ export default function UpdateWork(){
         category: "",
         link: "",
         github: "",
-        figma: ""
+        figma: "",
+        colorbg: "",
+        colortxt: ""
     })
     // useEffect(() => {
     //     if (!['true', 'false'].includes(String(workEdit.published))) {
@@ -125,7 +129,9 @@ export default function UpdateWork(){
           category: id === 'category' ? value : prev.category,
           link: id === 'link' ? value : prev.link,
           github: id === 'github' ? value : prev.github,
-          figma: id === 'figma' ? value : prev.figma
+          figma: id === 'figma' ? value : prev.figma,
+          colorbg: id === 'colorbg' ? value : prev.colorbg,
+          colortxt: id === 'colortxt' ? value : prev.colortxt
         }));
       };
 
@@ -224,6 +230,8 @@ export default function UpdateWork(){
                         <input type="text" id="link" name="link" placeholder="Lien du projet" value={workEdit.link} onChange={handleChange} className="champs"  />
                         <input type="text" id="github" name="github" placeholder="Github du projet" value={workEdit.github} onChange={handleChange} className="champs" />
                         <input type="text" id="figma" name="figma" placeholder="Figma du projet" value={workEdit.figma} onChange={handleChange} className="champs" />
+                        <input type="text" id="colorbg" name="colorbg" placeholder="Background-color du projet" value={workEdit.colorbg} onChange={handleChange} className="champs" />
+                        <input type="text" id="colortxt" name="colortxt" placeholder="Color du projet" value={workEdit.colortxt} onChange={handleChange} className="champs" />
 
                         <label>
                         Publié :

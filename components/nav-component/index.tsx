@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import { FC } from 'react';
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router';
+import {  useEffect } from 'react'
 
 const NavComponent: FC = () =>  {
     const { data: session } = useSession()
